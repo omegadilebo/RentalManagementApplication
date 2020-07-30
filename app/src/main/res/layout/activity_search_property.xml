@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.RentalManagement.Tenant.SearchProperty">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/white" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/search"
+        android:layout_margin="25dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/locationsLayout"
+        android:background="@drawable/rectangular_shape">
+        <AutoCompleteTextView
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="50dp"
+            android:background="@null"
+            android:fontFamily="@font/roboto_light"
+            android:hint="@string/enterlocation"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/currentLocation"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/location" />
+
+        <ImageView
+            android:id="@+id/clear"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/clear"
+            android:src="@drawable/cancel"
+            android:visibility="gone" />
+    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/locationsLayout"
+            android:orientation="vertical">
+        <!--apartment Type-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/apartmentType"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/apartmentType"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/rectangular_shape"
+            android:hint="@string/selectApartment" />
+        <!--bhk type-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginTop="5dp"
+            android:text="@string/bhk"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/selectBHK"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/rectangular_shape"
+            android:hint="@string/selectBHK" />
+        <!--size of the property-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:text="@string/size" />
+
+        <EditText
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/rectangular_shape"
+            android:fontFamily="@font/roboto_light"
+            android:hint="@string/enterSize"
+            android:inputType="number"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"
+            android:textSize="15sp" />
+        <!--rent per month-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/rent"
+            android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:id="@+id/rent"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:thumb="@drawable/thumb"
+                style="@style/MySeekBar"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/seekbar"/>
+        </LinearLayout>
+        <include
+            android:id="@+id/recylerLayout"
+            layout="@layout/locations_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationsLayout"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/rectangular_shape"
+        android:gravity="center"
+        android:text="@string/search"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

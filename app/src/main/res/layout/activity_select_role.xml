@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.SelectRole">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangular_shape"
+            android:text="@string/owner"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tenant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rectangular_shape"
+            android:text="@string/tenant"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeLayout"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/residential"
+                android:text="@string/residential"
+                android:gravity="center"
+                android:background="@drawable/rectangular_shape"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/commercial"
+                android:layout_width="100dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:text="@string/commercial"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/rectangular_shape"
+        android:gravity="center"
+        android:text="Next"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

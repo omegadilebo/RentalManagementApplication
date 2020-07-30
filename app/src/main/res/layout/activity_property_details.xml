@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.RentalManagement.Tenant.PropertyDetails">
+    <!--Toolbar-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/white" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rectangular_shape"
+        android:layout_below="@+id/toolbar" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewPager"
+        android:layout_margin="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/line"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center_vertical"
+                android:layout_toLeftOf="@+id/directions"
+                android:text="@string/dummyy_address" />
+            <ImageView
+                android:id="@+id/directions"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_directions" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/rent"
+                android:layout_below="@+id/address"
+                android:id="@+id/rent1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="15000"
+                android:id="@+id/rent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/address"
+                android:paddingLeft="10dp"
+                android:layout_toRightOf="@+id/rent1"
+                android:gravity="center_vertical"
+                android:textSize="17sp" />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="@string/floors"
+                 android:layout_below="@+id/rent1"
+                 android:id="@+id/floors1"
+                 android:gravity="center_vertical"
+                 android:layout_marginTop="10dp"
+                 android:textSize="17sp" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="5"
+                 android:id="@+id/floors"
+                 android:layout_alignParentEnd="true"
+                 android:layout_marginTop="10dp"
+                 android:layout_below="@+id/rent1"
+                 android:paddingLeft="10dp"
+                 android:layout_toRightOf="@+id/floors1"
+                 android:gravity="center_vertical"
+                 android:textSize="17sp" />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="@string/floor"
+                 android:layout_below="@+id/floors"
+                 android:id="@+id/floor1"
+                 android:gravity="center_vertical"
+                 android:layout_marginTop="10dp"
+                 android:textSize="17sp" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="4"
+                 android:id="@+id/floor"
+                 android:layout_alignParentEnd="true"
+                 android:layout_marginTop="10dp"
+                 android:layout_below="@+id/floors"
+                 android:paddingLeft="10dp"
+                 android:layout_toRightOf="@+id/floor1"
+                 android:gravity="center_vertical"
+                 android:textSize="17sp" />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="@string/preferTenant"
+                 android:layout_below="@+id/floor"
+                 android:id="@+id/preferTenant1"
+                 android:gravity="center_vertical"
+                 android:layout_marginTop="10dp"
+                 android:textSize="17sp" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="Family"
+                 android:id="@+id/preferTenant"
+                 android:layout_alignParentEnd="true"
+                 android:layout_marginTop="10dp"
+                 android:layout_below="@+id/floor"
+                 android:paddingLeft="10dp"
+                 android:layout_toRightOf="@+id/preferTenant1"
+                 android:gravity="center_vertical"
+                 android:textSize="17sp" />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="@string/foodPreference"
+                 android:layout_below="@+id/preferTenant1"
+                 android:id="@+id/foodPreference1"
+                 android:gravity="center_vertical"
+                 android:layout_marginTop="10dp"
+                 android:textSize="17sp" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="Veg &amp; NonVeg"
+                 android:id="@+id/foodPreference"
+                 android:layout_alignParentEnd="true"
+                 android:layout_marginTop="10dp"
+                 android:layout_below="@+id/preferTenant1"
+                 android:paddingLeft="10dp"
+                 android:layout_toRightOf="@+id/foodPreference1"
+                 android:gravity="center_vertical"
+                 android:textSize="17sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/features"
+                android:layout_below="@+id/foodPreference1"
+                android:id="@+id/features1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text=" AC \n Gyser \n Furnished"
+                android:layout_below="@+id/features1"
+                android:id="@+id/features"
+                android:background="@drawable/rectangular_shape"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/water"
+                android:layout_below="@+id/features"
+                android:id="@+id/water1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Corporation &amp; Boar"
+                android:id="@+id/water"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/features"
+                android:paddingLeft="10dp"
+                android:layout_toRightOf="@+id/water1"
+                android:gravity="center_vertical"
+                android:textSize="17sp" />
+
+            <!--lify Avaliable-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/lift"
+                android:layout_below="@+id/water1"
+                android:id="@+id/lift1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Avaliable"
+                android:id="@+id/lift"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/water1"
+                android:paddingLeft="10dp"
+                android:layout_toRightOf="@+id/lift1"
+                android:gravity="center_vertical"
+                android:textSize="17sp" />
+            <!--parking-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/parking"
+                android:layout_below="@+id/lift1"
+                android:id="@+id/parking1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Bike &amp; Car"
+                android:id="@+id/parking"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/lift1"
+                android:paddingLeft="10dp"
+                android:layout_toRightOf="@+id/parking1"
+                android:gravity="center_vertical"
+                android:textSize="17sp" />
+            <!--time to contact-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/timeToContact"
+                android:layout_below="@+id/parking1"
+                android:id="@+id/timeToContact1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="8AM - 6PM"
+                android:id="@+id/timeToContact"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/parking1"
+                android:paddingLeft="10dp"
+                android:layout_toRightOf="@+id/timeToContact1"
+                android:gravity="center_vertical"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+    </ScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contactOwner"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/rectangular_shape"
+        android:text="Contact Owner"/>
+</RelativeLayout>

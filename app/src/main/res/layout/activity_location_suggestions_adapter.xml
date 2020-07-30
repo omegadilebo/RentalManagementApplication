@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout1"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:src="@drawable/location_icon" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/first"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textSize="13sp"
+                android:gravity="center_vertical"
+                android:hint="@string/first"
+                android:singleLine="true" />
+            <TextView
+                android:id="@+id/second"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:textSize="13sp"
+                android:gravity="center_vertical"
+                android:hint="@string/second"
+                android:singleLine="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/ash" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

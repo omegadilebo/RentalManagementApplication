@@ -1,0 +1,69 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="editTextStyle">@style/RobotoTextStyle</item>
+        <item name="android:seekBarStyle">@style/MySeekBar</item>
+        <item name="seekBarStyle">@style/MySeekBar</item>
+    </style>
+    <!--toolbar font-->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/roboto_light</item>
+    </style>
+    <!--text input layout fonts-->
+    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/black</item>
+        <item name="boxStrokeColor">@color/black</item>
+    </style>
+
+    <style name="MyTextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox.Dense">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+<!--style for Dialog-->
+    <style name="MyAlertDialogTheme" parent="@android:style/Theme.Material.Light.Dialog.Alert">
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="MyTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+<!--style for textview-->
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_light</item>
+    </style>
+<!--style for button-->
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <!--Edit text style-->
+    <style name="RobotoTextStyle" parent="android:Widget.EditText">
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:hint">@font/roboto_light</item>
+        <item name="android:inputType"></item>
+    </style>
+    <!--progress dialog color-->
+    <style name="progressDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/black</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+    <style name="MySeekBar" parent="@android:style/Widget.SeekBar">
+        <item name="android:progressBackgroundTint">@color/ash</item>
+        <item name="android:progressTint">@color/design_default_color_primary</item>
+        <item name="android:colorControlActivated">@color/design_default_color_primary</item>
+        <item name="android:minHeight">4dip</item>
+        <item name="android:maxHeight">4dip</item>
+    </style>
+</resources>

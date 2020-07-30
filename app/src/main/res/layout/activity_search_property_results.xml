@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.RentalManagement.Tenant.SearchPropertyResults">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/linearLayout"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/sort"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:text="Sort"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:background="@drawable/rectangular_shape"
+        />
+    <TextView
+        android:id="@+id/filter"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/sort"
+        android:layout_alignParentEnd="true"
+        android:text="Filter"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:background="@drawable/rectangular_shape"
+         />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/linearLayout"
+        android:layout_margin="15dp"
+        android:scrollbars="vertical"/>
+
+</RelativeLayout>

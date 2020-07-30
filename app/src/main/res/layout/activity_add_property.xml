@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Owner.AddProperty">
+    <!--Toolbar-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/white" />
+    <!--enter Location-->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/location"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangular_shape">
+
+            <AutoCompleteTextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:background="@null"
+                android:fontFamily="@font/roboto_light"
+                android:hint="@string/enterlocation"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/currentLocation"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/location" />
+
+            <ImageView
+                android:id="@+id/clear"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/clear"
+                android:src="@drawable/cancel"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--property details-->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--apartment Type-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/apartmentType"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/apartmentType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:hint="@string/selectApartment" />
+            <!--bhk type-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/bhk"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/selectBHK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:hint="@string/selectBHK" />
+            <!--size of the property-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15sp"
+                android:text="@string/size" />
+
+            <EditText
+                android:id="@+id/size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:fontFamily="@font/roboto_light"
+                android:hint="@string/enterSize"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="15sp" />
+            <!--rent per month-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/rent"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/rent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:hint="@string/enterRent"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="number"
+                android:textCursorDrawable="@null"
+                android:textSize="15sp" />
+            <!--Floors-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/floors"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/floors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangular_shape"
+                        android:hint="@string/enterFloors"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textCursorDrawable="@null"
+                        android:inputType="number"
+                        android:textSize="15sp" />
+                    prefered tenants
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="100dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/floor"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/floor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangular_shape"
+                        android:hint="@string/enterFloor"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textCursorDrawable="@null"
+                        android:inputType="number"
+                        android:textSize="15sp" />
+                    prefered tenants
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/preferTenant"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tenantType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:hint="@string/selectTenant" />
+            <!--food preference-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/foodPreference"
+                android:textSize="15sp" />
+
+            <RadioGroup
+                android:id="@+id/foodRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/vegRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/veg" />
+
+                <RadioButton
+                    android:id="@+id/nonVegRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/nonveg" />
+
+                <RadioButton
+                    android:id="@+id/anyRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/any" />
+            </RadioGroup>
+            <!--special features-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/features"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/features"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:hint="@string/featuresHint" />
+            <!--water facility-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/water"
+                android:textSize="15sp" />
+
+            <RadioGroup
+                android:id="@+id/wateGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/corporationRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/corporation" />
+
+                <RadioButton
+                    android:id="@+id/boarRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/boar" />
+
+                <RadioButton
+                    android:id="@+id/bothRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/both" />
+            </RadioGroup>
+            <!--Lift Avaliable or Not-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/lift"
+                android:textSize="15sp" />
+
+            <RadioGroup
+                android:id="@+id/liftGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/avaliableRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/avaliable" />
+
+                <RadioButton
+                    android:id="@+id/notAvaliableRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/notAvaliable" />
+            </RadioGroup>
+            <!--parking avaliable or not-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/parking"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/parking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:hint="@string/parkingHint" />
+            <!--time to contact-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/timeToContact"
+                android:textSize="15sp" />
+
+            <RadioGroup
+                android:id="@+id/timeGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/timeRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/time" />
+
+                <RadioButton
+                    android:id="@+id/anyTimeRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/anyTime" />
+            </RadioGroup>
+            <!--address-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/address"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:hint="@string/enterAddress"
+                android:inputType="textMultiLine"
+                android:textSize="15sp"
+                android:lines="3"
+                android:minLines="3"
+                android:gravity="top|left"
+                android:scrollbars="vertical"
+                android:textCursorDrawable="@null" />
+        </LinearLayout>
+    </ScrollView>
+    <!--property details ends here-->
+    <TextView
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/rectangular_shape"
+        android:gravity="center"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+    <!--location suggestions layout-->
+    <include
+        android:id="@+id/recylerLayout"
+        layout="@layout/locations_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone" />
+</RelativeLayout>

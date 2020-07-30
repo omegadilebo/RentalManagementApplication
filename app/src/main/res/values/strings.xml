@@ -1,0 +1,123 @@
+<resources>
+    <string name="app_name">Rental Management</string>
+    <string name="welcomeNote">Welcome to Rental Management Application</string>
+    <string name="login">Login</string>
+    <string name="registration">Registration</string>
+    <string name="register">Register</string>
+    <string name="forgotPassword">Forgot Password?</string>
+    <string name="fullName">Full Name</string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="password">Password</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="occupation">Select Occupation</string>
+    <string name="sendOtp">Send OTP</string>
+    <string name="submit">Submit OTP</string>
+    <string name="enterOtp">Enter OTP:</string>
+    <string name="rental">Rental</string>
+    <string name="property">Property Management</string>
+    <string name="packers">Packers &amp;</string>
+    <string name="movers">Movers</string>
+    <string name="nearShops">Near By Shops</string>
+    <string name="hostel">Hostel</string>
+    <string name="next">Next</string>
+    <string name="clear">Clear</string>
+    <string name="owner">Property Owner</string>
+    <string name="tenant">Tenant</string>
+    <string name="addProperty">Add Property</string>
+    <string name="profile">Profile</string>
+    <string name="logOut">LogOut</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save&amp;Continue</string>
+    <string name="residential">Residential</string>
+    <string name="commercial">Commercial</string>
+    <string name="location">Location:</string>
+    <string name="enterlocation">Enter Location</string>
+    <string name="apartmentType">Apartment Type:</string>
+    <string name="selectApartment">Select Apartment Type</string>
+    <string name="bhk">BHK:</string>
+    <string name="selectBHK">Select BHK</string>
+    <string name="floors">No. of floors:</string>
+    <string name="enterFloors">Enter No. of Floors.</string>
+    <string name="floor">Floor No. :</string>
+    <string name="enterFloor">Enter Floor No.</string>
+    <string name="size">Size:</string>
+    <string name="enterSize">Enter in Sq.ft.</string>
+    <string name="rent">Rent per month:</string>
+    <string name="enterRent">Enter Rent</string>
+    <string name="preferTenant">Prefered Tenants:</string>
+    <string name="selectTenant">Select Tenant Type</string>
+    <string name="foodPreference">Food Preference:</string>
+    <string name="veg">Veg</string>
+    <string name="nonveg">Non-Veg</string>
+    <string name="any">Any</string>
+    <string name="apiKey">AIzaSyATaE4rWC3YNt0hd0x9TgkOJCN9RfzV6mE</string>
+    <string name="first">first</string>
+    <string name="second">second</string>
+    <string name="features">Special Features:</string>
+    <string name="featuresHint">Features</string>
+    <string name="water">Water:</string>
+    <string name="corporation">Corporation</string>
+    <string name="boar">Boar</string>
+    <string name="both">Both</string>
+    <string name="parking">Parking Facility:</string>
+    <string name="parkingHint">Parking Type</string>
+    <string name="lift">Lift Avaliable:</string>
+    <string name="avaliable">Avaliable</string>
+    <string name="notAvaliable">Not Avaliable</string>
+    <string name="timeToContact">Prefered time to Contact:</string>
+    <string name="time">8AM-6PM</string>
+    <string name="anyTime">AnyTime</string>
+    <string name="address">Address:</string>
+    <string name="enterAddress">Enter Address</string>
+    <string name="inside_image">Inside Image</string>
+    <string name="outside_image">Outside Image</string>
+    <string name="specific_image"> Any Special Area</string>
+    <string name="upload">Upload</string>
+    <string name="enter_your_otp">Enter Your OTP</string>
+    <string name="submit_otp">Submit OTP</string>
+    <string name="update_password">Update</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="edit">Edit</string>
+    <string name="search">Search</string>
+    <string name="dummyy_address">4BHK, 500 sq. ft.\n19-31, girinagar,Idpl Colony,Quthubullapur,Medchal,Telangana,500037</string>
+
+    <string-array name="occupation">
+        <item>Salaried</item>
+        <item>SelfEmployeed</item>
+        <item>Business</item>
+    </string-array>
+    <string-array name="apartmentType">
+        <item>Apartment</item>
+        <item>Independant</item>
+        <item>Duplex / Villa</item>
+        <item>Pent House</item>
+    </string-array>
+
+    <string-array name="selectBHK">
+        <item>1BHK</item>
+        <item>2BHK</item>
+        <item>3BHK</item>
+        <item>4BHK</item>
+    </string-array>
+    <string-array name="tenantType">
+        <item>Family</item>
+        <item>Individual</item>
+        <item>Any</item>
+    </string-array>
+    <string-array name="features">
+        <item>Furnished</item>
+        <item>CupBoards</item>
+        <item>AC</item>
+        <item>Geyser(Heater)</item>
+    </string-array>
+    <string-array name="parking">
+        <item>Bike</item>
+        <item>Car</item>
+        <item>Both</item>
+        <item>Not Avaliable</item>
+    </string-array>
+</resources>

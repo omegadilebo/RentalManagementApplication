@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.RentalManagement.Owner.UploadPropertyImages">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/toolbar"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="image1"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/capture1"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rectangular_shape"
+            android:gravity="center"
+            android:text="@string/inside_image"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/imagerelativeLayout1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="70dp"
+            android:visibility="gone">
+
+            <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/image1"
+                app:siShape="@drawable/img_rectangular_shape"
+                android:layout_centerInParent="true"
+                app:siSquare="true"/>
+
+            <ImageView
+                android:id="@+id/clear1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/clear_red" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/relativeLayout1"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Image 2:-"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/capture2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rectangular_shape"
+            android:gravity="center"
+            android:text="@string/outside_image"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/imagerelativeLayout2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="70dp"
+            android:visibility="gone">
+
+            <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/image2"
+                app:siShape="@drawable/img_rectangular_shape"
+                android:layout_centerInParent="true"
+                app:siSquare="true"/>
+
+            <ImageView
+                android:id="@+id/clear2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/clear_red" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/relativeLayout2"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Image 3:-"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/capture3"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rectangular_shape"
+            android:gravity="center"
+            android:text="@string/specific_image"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/imagerelativeLayout3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="70dp"
+            android:visibility="gone">
+
+            <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/image3"
+                app:siShape="@drawable/img_rectangular_shape"
+                android:layout_centerInParent="true"
+                app:siSquare="true"/>
+
+            <ImageView
+                android:id="@+id/clear3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/clear_red" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout3"
+        android:layout_marginLeft="30dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/upload"
+            android:background="@drawable/eclipse_shape"
+            android:text="@string/upload"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</RelativeLayout>
