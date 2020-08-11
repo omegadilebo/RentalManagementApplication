@@ -11,6 +11,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -22,6 +24,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,8 +60,11 @@ import com.example.RentalManagement.Dialogs.Parking;
 import com.example.RentalManagement.Dialogs.TenantType;
 import com.example.RentalManagement.Owner.Model.AddPropertyResponse;
 import com.example.RentalManagement.R;
+import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
 import com.example.RentalManagement.Services.NetworkConnection;
+import com.example.RentalManagement.utils.BitmapHelper;
+import com.example.RentalManagement.utils.Config;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -73,12 +79,17 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddProperty extends AppCompatActivity implements View.OnClickListener,
         ApartmentType.ApartmentListener,
@@ -90,13 +101,15 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     /*declarations*/
     Toolbar toolbar;
     AutoCompleteTextView enterLocation;
-    EditText enterSize, enterRent, enterFloor, enterFloors, enterAddress;
+    EditText enterApartmentName, enterSize, enterRent, enterFloor, enterFloors, enterAddress;
     RelativeLayout recylerLayout;
     TextView apartmentType, selectBHK, tenantType, features, parkingFacility, save;
     ImageView currentLocation, clear, powered;
     LocationManager locationManager;
     RadioGroup foodRadioGroup, waterRadioGroup, liftRadioGroup, contactRadioGroup;
     RadioButton foodRadioButton, waterRadioButton, liftRadioButton, contactRadioButton;
+    RadioButton vegRadio, nonVegRadio, foodAnyRadio,
+            corpRadio, boarRadio, bothRadio, liftAvailRadio, notAvailRadio, timeRadio, anyTimeRadio;
     RecyclerView recyclerView;
     private FusedLocationProviderClient FusedLocationProviderClient;
     LocationSuggestionsAdapter locationSuggestionsAdapter;   //Adapter to display location suggestions
@@ -108,7 +121,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     ProgressDialog progressDialog;
     AddPropertyResponse addPropertyResponse;
     NetworkConnection networkConnection;
-    String enteredLocation, apartment, bhk, extent, rent, floorNo, floors,
+    String enteredLocation, apartment, apartmentName, bhk, extent, rent, floorNo, floors,
             tenants, food, specialFeatures, water, parking, lift,
             contactTime, address;
     String[] seperated;
@@ -116,10 +129,14 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     double latitude, longitude;
     LatLng latLng;
-    String locality;
+    String locality, subLocality;
     List<Address> addresses;
     private boolean isReached = false;
     int j = 20;
+    String buttonName;
+    Integer id;
+    Bitmap bitmap1, bitmap2, bitmap3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +163,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         powered = findViewById(R.id.powered);
         scrollView = findViewById(R.id.scrollView);
         apartmentType = findViewById(R.id.apartmentType);
+        enterApartmentName = findViewById(R.id.apartmentName);
         selectBHK = findViewById(R.id.selectBHK);
         enterSize = findViewById(R.id.size);
         enterRent = findViewById(R.id.rent);
@@ -160,6 +178,9 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 foodRadioButton = (RadioButton) radioGroup.findViewById(checkedId);
             }
         });
+        vegRadio = findViewById(R.id.vegRadioButton);
+        nonVegRadio = findViewById(R.id.nonVegRadioButton);
+        foodAnyRadio = findViewById(R.id.anyRadioButton);
         features = findViewById(R.id.features);
         waterRadioGroup = findViewById(R.id.wateGroup);
         waterRadioGroup.clearCheck();
@@ -169,6 +190,9 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 waterRadioButton = (RadioButton) radioGroup.findViewById(checkedId);
             }
         });
+        corpRadio = findViewById(R.id.corporationRadioButton);
+        boarRadio = findViewById(R.id.boarRadioButton);
+        bothRadio = findViewById(R.id.bothRadioButton);
         liftRadioGroup = findViewById(R.id.liftGroup);
         liftRadioGroup.clearCheck();
         liftRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -177,6 +201,8 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 liftRadioButton = (RadioButton) radioGroup.findViewById(checkedId);
             }
         });
+        liftAvailRadio = findViewById(R.id.avaliableRadioButton);
+        notAvailRadio = findViewById(R.id.notAvaliableRadioButton);
         parkingFacility = findViewById(R.id.parking);
         enterAddress = findViewById(R.id.address);
         contactRadioGroup = findViewById(R.id.timeGroup);
@@ -187,6 +213,8 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 contactRadioButton = (RadioButton) radioGroup.findViewById(checkedId);
             }
         });
+        timeRadio = findViewById(R.id.timeRadioButton);
+        anyTimeRadio = findViewById(R.id.anyTimeRadioButton);
         save = findViewById(R.id.save);
         save.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
         networkConnection = new NetworkConnection(this);
@@ -200,8 +228,17 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         features.setOnClickListener(this);
         parkingFacility.setOnClickListener(this);
         save.setOnClickListener(this);
+
+        /*getting data from previous activity to know which button has clicked*/
         Intent i = getIntent();
-        Bundle bundle = i.getBundleExtra("bundle");
+        buttonName = i.getStringExtra("buttonName");
+        if(buttonName.equalsIgnoreCase("addProperty")){
+
+        }else if(buttonName.equalsIgnoreCase("edit")) {
+            id = i.getIntExtra("id",0);
+            getImages(id);
+        }
+       // getImages();
         /*auto location suggestions for edit text*/
         String apiKey = getString(R.string.apiKey);
         data = new ArrayList<String>();
@@ -215,6 +252,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 cursorPosition = enterLocation.getSelectionStart();
@@ -271,6 +309,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                     currentLocation.setVisibility(View.GONE);
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 data.clear();
@@ -279,30 +318,32 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         });
 
         /*enter property address field*/
-        enterAddress.addTextChangedListener(new TextWatcher() {
+       /* enterAddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
-                Log.d("TAG", "afterTextChanged: "+enterAddress.getText().length());
+                Log.d("TAG", "afterTextChanged: " + enterAddress.getText().length());
                 if (enterAddress.getLayout().getLineCount() > 5) {
                     enterAddress.getText()
                             .delete(enterAddress.getText().length() - 1, enterAddress.getText().length());
-                }else{
-                    if(enterAddress.getText().length() == j){
+                } else {
+                    if (enterAddress.getText().length() == j) {
                         j += 21;
                         enterAddress.append("\n");
                     }
                 }
             }
-        });
+        });*/
     }
 
-/*changing statusbar color*/
+    /*changing statusbar color*/
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public Window statusBarColor() {
         Window window = this.getWindow();
@@ -311,12 +352,13 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         return window;
     }
 
-/*toolbar icons initilizations and onclick*/
+    /*toolbar icons initilizations and onclick*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_icons, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -330,7 +372,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         return true;
     }
 
-/*onclick of widgets*/
+    /*onclick of widgets*/
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -357,13 +399,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.save:
                 /*validations*/
-                // checkingValidations();
-                enteredLocation = enterLocation.getText().toString();
-                locationLatLng(enteredLocation);
-                Intent i = new Intent(this, UploadPropertyImages.class);
-                i.putExtra("locality",locality);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
+                checkingValidations();
                 break;
 
         }
@@ -389,13 +425,13 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-/*checking gps turned on or not*/
+    /*checking gps turned on or not*/
     public boolean GpsStatus() {
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ;
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-/*permissions result*/
+    /*permissions result*/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length > 0) {
@@ -407,9 +443,9 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                     startActivity(intent);
                 }*/
             } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-
                 if (ActivityCompat.shouldShowRequestPermissionRationale(AddProperty.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     //when click on deny
+                    checkLocationPermission();
                 } else {
                     //when click on don't show again
                     Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID));
@@ -423,23 +459,26 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     private void setlistView() {            //to send data to adapter
         Log.d("TAG", "setlistView: " + data.size() + "  " + data1.size());
         locationSuggestionsAdapter = new LocationSuggestionsAdapter(data, data1,
-                AddProperty.this, getApplicationContext(),"addProperty");
+                AddProperty.this, getApplicationContext(), "addProperty");
         recyclerView.setAdapter(locationSuggestionsAdapter);
     }
 
-  /*getting apartmenttype, bhk, tenant type, features,parking details from Dialogs */
+    /*getting apartmenttype, bhk, tenant type, features,parking details from Dialogs */
     @Override
     public void getApartmentType(String apartment) {
         apartmentType.setText(apartment);
     }
+
     @Override
     public void getBhkType(String BHK) {
         selectBHK.setText(BHK);
     }
+
     @Override
     public void getTenantType(String tenat) {
         tenantType.setText(tenat);
     }
+
     @Override
     public void getFeatures(String feature) {
         features.setText(feature.substring(1));
@@ -447,12 +486,13 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         seperated = s.split(",");
         Log.d("TAG", "getFeatures: " + seperated.length + "\n" + Arrays.toString(seperated));
     }
+
     @Override
     public void getParkingDetails(String slot) {
         parkingFacility.setText(slot);
     }
 
-/*onclick of location suggestions*/
+    /*onclick of location suggestions*/
     public void getLocation(String selectedLocation) {
         scrollView.setVisibility(View.VISIBLE);
         if (cursorPosition > 0) {
@@ -474,8 +514,8 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 Location location = locationManager
                         .getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (location != null) {
-                    getLocationDetails(new LatLng(location.getLatitude(), location.getLongitude()));
-                }else{
+                    getLocationDetails(new LatLng(location.getLatitude(), location.getLongitude()), "locationClick");
+                } else {
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
@@ -483,8 +523,8 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                     Location location1 = locationManager
                             .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if (location1 != null) {
-                        getLocationDetails(new LatLng(location1.getLatitude(), location1.getLongitude()));
-                    }else {
+                        getLocationDetails(new LatLng(location1.getLatitude(), location1.getLongitude()), "locationClick");
+                    } else {
                         Toast.makeText(AddProperty.this, "unable to get current location", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -495,7 +535,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         }//catch
     }
 
-/*convertinf location name to latlng*/
+    /*convertinf location name to latlng*/
     private void locationLatLng(String locationDetails) {
         Geocoder geocoder = new Geocoder(getApplicationContext());
         try {
@@ -504,13 +544,13 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             latLng = new LatLng(latitude, longitude);
-            getLocationDetails(latLng);
+            getLocationDetails(latLng, "suggestionClick");
         } catch (Exception e) {
         }
     }
 
-/*converting latlng to location name*/
-    private void getLocationDetails(LatLng latLng) {
+    /*converting latlng to location name*/
+    private void getLocationDetails(LatLng latLng, String s) {
         Geocoder geocoder = new Geocoder(AddProperty.this, Locale.getDefault());
         try {
             Log.d("TAG", "latlng" + latLng + "  lat" + latLng.latitude + "long" + latLng);
@@ -518,11 +558,14 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
             latitude = latLng.latitude;
             longitude = latLng.longitude;
             addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            enterLocation.setText(addresses.get(0).getAddressLine(0));
+            if (s.equalsIgnoreCase("locationClick")) {
+                enterLocation.setText(addresses.get(0).getAddressLine(0));
+            }
             currentLocation.setVisibility(View.GONE);
             clear.setVisibility(View.VISIBLE);
             locality = addresses.get(0).getLocality();
-            Log.d("TAG", "CityName: latlngaddress" + addresses + "\n" +
+            subLocality = addresses.get(0).getSubLocality();
+            Log.d("TAG", "CityName: latlngaddress" + "\n" +
                     addresses.get(0).getLocality() + "\n" +
                     addresses.get(0).getSubLocality() + "\n" +
                     addresses.get(0).getAdminArea() + "\n" +
@@ -532,7 +575,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-/*hidekeyboard adfter onclick of location suggestions*/
+    /*hidekeyboard adfter onclick of location suggestions*/
     public void hideKeybaord() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -545,6 +588,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     private void checkingValidations() {
         enteredLocation = enterLocation.getText().toString();
         apartment = apartmentType.getText().toString();
+        apartmentName = enterApartmentName.getText().toString();
         bhk = selectBHK.getText().toString();
         extent = enterSize.getText().toString();
         rent = enterRent.getText().toString();
@@ -559,6 +603,8 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
             enterLocation.setError("Please Enter Location");
         } else if (apartment.equalsIgnoreCase("")) {
             Toast.makeText(this, "Select ApartmentType", Toast.LENGTH_SHORT).show();
+        } else if (apartmentName.length() == 0) {
+            enterApartmentName.setError("Please Enter Apartment Name");
         } else if (bhk.equalsIgnoreCase("")) {
             Toast.makeText(this, "Select BHK Type", Toast.LENGTH_SHORT).show();
         } else if (extent.length() < 2) {
@@ -592,65 +638,154 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
             if (Integer.parseInt(floors) < Integer.parseInt(floorNo)) {
                 Toast.makeText(this, "floor Number should be lessthan or equal to number of floors", Toast.LENGTH_LONG).show();
             } else {
-                if (networkConnection.isConnectingToInternet()) {
-                    try {
-                        submitDetails(enteredLocation, latitude, longitude, apartment, bhk, extent, rent, floorNo, floors,
-                                tenants, food, Arrays.toString(seperated), water, parking, lift,
-                                contactTime, address);
-                    } catch (Exception e) {
-                        if (progressDialog != null) {
-                            progressDialog.cancel();
-                        }
-                    }
-                } else {
-                    Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                }
+               /* submitDetails(enteredLocation, latitude, longitude, apartment, apartmentName, bhk, extent, rent, floorNo, floors,
+                        tenants, food, seperated, water, parking, lift,
+                        contactTime, address);*/
+                Intent i = new Intent(getApplicationContext(), UploadPropertyImages.class);
+                Bundle bundle = new Bundle();
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                bundle.putDouble("latitude", latitude);
+                bundle.putDouble("longitude", longitude);
+                bundle.putString("locality", locality);
+                bundle.putString("subLocality", subLocality);
+                bundle.putString("apartmentType", apartment);
+                bundle.putString("apartmentName", apartmentName);
+                bundle.putString("bhk", bhk);
+                bundle.putString("extent", extent);
+                bundle.putString("rent", rent);
+                bundle.putString("floors", floors);
+                bundle.putString("floorNo", floorNo);
+                bundle.putString("tenantType", tenants);
+                bundle.putString("foodType", food);
+                bundle.putStringArray("specialFeatures", seperated);
+                bundle.putString("water", water);
+                bundle.putString("parking", parking);
+                bundle.putString("lift", lift);
+                bundle.putString("contactTime", contactTime);
+                bundle.putString("address", address);
+                bundle.putString("buttonName",buttonName);
+                bundle.putInt("id",id);
+                i.putExtra("bundle", bundle);
+                startActivity(i);
             }
         }
     }
 
-    /*submitting property details to server*/
-    private void submitDetails(String enteredLocation, double latitude, double longitude,String apartment, String bhk, String extent,
-                               String rent, String floors, String floorNo, String tenants, String food, String specialFeatures,
-                               String water, String parking, String lift, String contactTime, String address) {
-        Intent i = new Intent(this, UploadPropertyImages.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
-
-        /*progressDialog.setMessage("Please wait ...");
-        progressDialog.show();
-        apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-        Call<AddPropertyResponse> call = apiInterface.getSubmitDetailsStatus(
-                new AddPropertyResponse(enteredLocation, String.valueOf(latitude), String.valueOf(longitude),
-                        apartment, bhk,extent, rent,floors, floorNo, tenants, food, specialFeatures,water,parking,
-                        lift, contactTime, address));
-        call.enqueue(new Callback<AddPropertyResponse>() {
-            @Override
-            public void onResponse(Call<AddPropertyResponse> call, Response<AddPropertyResponse> response) {
-                addPropertyResponse = response.body();
-                try {
-                    if(addPropertyResponse.getStatus().equalsIgnoreCase("SUCCESS")) {
-                        progressDialog.cancel();
-                        Intent i = new Intent(getApplicationContext(), UploadPropertyImages.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
-                    }else{
-                        Toast.makeText(AddProperty.this, "Try Again Later", Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (Exception e) {
-                    progressDialog.cancel();
-                }
-            }
-            @Override
-            public void onFailure(Call<AddPropertyResponse> call, Throwable t) {
-                progressDialog.cancel();
-            }
-        });;*/
-    }
-
     @Override
     public void onLocationChanged(@NonNull Location location) {
+
+    }
+
+    private void getImages(int id) {
+        if (networkConnection.isConnectingToInternet()) {
+            try {
+                progressDialog.setMessage("Please wait We are Fetching Details...");
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+                apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+                Call<AddPropertyResponse> call = apiInterface.getHistory(id);
+                call.enqueue(new Callback<AddPropertyResponse>() {
+                    @Override
+                    public void onResponse(Call<AddPropertyResponse> call, Response<AddPropertyResponse> response) {
+                        addPropertyResponse = response.body();
+                        Log.d("TAG", "getimages: " + "\n" +
+                                addPropertyResponse.getWaterSource() + addPropertyResponse.getContactTime() + addPropertyResponse.getAddress());
+                        try {
+                            if (progressDialog != null) {
+                                progressDialog.cancel();
+                            }
+                            byte[] decodedString1 = Base64.decode(addPropertyResponse.getImage1(), Base64.DEFAULT);
+                            bitmap1 = BitmapFactory.decodeByteArray(decodedString1, 0, decodedString1.length);
+                            BitmapHelper.getInstance().setBitmap1(bitmap1);
+                            byte[] decodedString2 = Base64.decode(addPropertyResponse.getImage2(), Base64.DEFAULT);
+                            bitmap2 = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
+                            BitmapHelper.getInstance().setBitmap2(bitmap2);
+                            byte[] decodedString3 = Base64.decode(addPropertyResponse.getImage3(), Base64.DEFAULT);
+                            bitmap3 = BitmapFactory.decodeByteArray(decodedString3, 0, decodedString3.length);
+                            BitmapHelper.getInstance().setBitmap3(bitmap3);
+
+                            LatLng latLng = new LatLng(Double.parseDouble(addPropertyResponse.getLatitude()), Double.parseDouble(addPropertyResponse.getLongitude()));
+                            getLocationDetails(latLng, "locationClick");
+                            apartmentType.setText(addPropertyResponse.getApartmentType());
+                            enterApartmentName.setText(addPropertyResponse.getApartmentName());
+                            enterAddress.setText(addPropertyResponse.getAddress());
+                            selectBHK.setText(addPropertyResponse.getBHK());
+                            enterSize.setText(addPropertyResponse.getSft());
+                            enterRent.setText(addPropertyResponse.getRent());
+                            enterFloors.setText(addPropertyResponse.getRoomNo());
+                            enterFloor.setText(addPropertyResponse.getFloorNo());
+                            tenantType.setText(addPropertyResponse.getTenantType());
+                            switch (addPropertyResponse.getFoodType()) {
+                                case "Veg":
+                                    vegRadio.setChecked(true);
+                                    break;
+                                case "Non-Veg":
+                                    nonVegRadio.setChecked(true);
+                                    break;
+                                case "Any":
+                                    foodAnyRadio.setChecked(true);
+                                    break;
+                            }
+                            features.setText(addPropertyResponse.getSplFeatures().substring(1, addPropertyResponse.getSplFeatures().length() - 1));
+                            String s = addPropertyResponse.getSplFeatures().substring(1, addPropertyResponse.getSplFeatures().length() - 1);
+                            seperated = s.split(",");
+                            switch (addPropertyResponse.getWaterSource()) {
+                                case "Corporatio":
+                                    corpRadio.setChecked(true);
+                                    break;
+                                case "Boar":
+                                    boarRadio.setChecked(true);
+                                    break;
+                                case "Both":
+                                    bothRadio.setChecked(true);
+                                    break;
+                            }
+                            switch (addPropertyResponse.getLiftAvailable()) {
+                                case "Avaliable":
+                                    liftAvailRadio.setChecked(true);
+                                    break;
+                                case "Not Avaliable":
+                                    notAvailRadio.setChecked(true);
+                                    break;
+
+                            }
+                            parkingFacility.setText(addPropertyResponse.getParkingType());
+                            switch (addPropertyResponse.getContactTime()) {
+                                case "8AM-6PM":
+                                    timeRadio.setChecked(true);
+                                    break;
+                                case "AnyTime":
+                                    anyTimeRadio.setChecked(true);
+                                    break;
+
+                            }
+                            // parkingFacility
+                        } catch (Exception e) {
+                            Log.d("TAG", "getimages:2 "+e);
+                            if (progressDialog != null) {
+                                progressDialog.cancel();
+                            }
+                            Toast.makeText(getApplicationContext(), R.string.try_again, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddPropertyResponse> call, Throwable t) {
+                        if (progressDialog != null) {
+                            progressDialog.cancel();
+                        }
+                        Toast.makeText(getApplicationContext(), R.string.try_again, Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (Exception e) {
+                if (progressDialog != null) {
+                    progressDialog.cancel();
+                }
+                Toast.makeText(this, R.string.try_again, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, R.string.no_net, Toast.LENGTH_LONG).show();
+        }
 
     }
 }

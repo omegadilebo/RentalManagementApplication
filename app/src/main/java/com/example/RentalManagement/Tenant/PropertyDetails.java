@@ -28,9 +28,8 @@ public class PropertyDetails extends AppCompatActivity {
     TextView contactOwner;
     ViewPager viewPager;
     PropertyImagePagerAdapter adapter;
-    int[] images = new int[]{R.drawable.img3,
-            R.drawable.img4, R.drawable.img6,
-            R.drawable.img7, R.drawable.img8};
+    int[] images = new int[]{R.drawable.inside,
+            R.drawable.specialarea, R.drawable.outside};
     NetworkConnection networkConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

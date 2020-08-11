@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/rectangular_shape">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:scaleType="centerCrop"
             android:id="@+id/propertyImage"/>
             <TextView
                 android:layout_width="match_parent"
@@ -21,30 +23,32 @@
                 android:background="@color/ash"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/line"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
                 android:text="@string/dummyy_address"
                 android:id="@+id/address"/>
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="34dp"
-                android:layout_below="@+id/address"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/rectangular_shape"
-                android:id="@+id/edit"
-                android:text="@string/edit"/>
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="34dp"
+                android:layout_height="37dp"
+                android:orientation="horizontal"
                 android:layout_below="@+id/address"
+                android:weightSum="2"
+                >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:id="@+id/status"
-                android:background="@drawable/rectangular_shape"
-                android:layout_toRightOf="@+id/edit"
-                android:layout_alignParentEnd="true"
-                android:text="Pending"/>
+                android:background="@drawable/square_shape_backgroud"
+                android:id="@+id/edit"
+                android:textSize="17sp"
+                android:textColor="@color/white"
+                android:text="@string/edit"/>
+            </LinearLayout>
         </RelativeLayout>
 
 </LinearLayout>

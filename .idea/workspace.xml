@@ -5,31 +5,90 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="onActivityResult:" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="bf1279c1-2d8a-458e-9165-6ad759fe3c87" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/ForgotPasswordActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/LoginActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/PasswordChange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/RegisterActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectCategory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectRole.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SplashActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/ChangePasswordResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/ForgotPasswordResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/LoginResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/RegistrationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Adapters/HistoryAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/AddProperty.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/History.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Model/AddPropertyResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Model/HistoryResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/UploadPropertyImages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/Adapters/PropertyImagePagerAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/Adapters/SearchPropertyResultsAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/Model/SearchPropertyResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/PropertyDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/SearchProperty.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/SearchPropertyResults.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/SortDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/PropertyImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/utils/BitmapHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/black_arrow_back.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/filter.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/inside.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/outside.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sort.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/specialarea.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/square_shape_backgroud.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_property_image.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/ForgotPasswordActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/ForgotPasswordActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/PasswordChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/PasswordChange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SplashActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/ApartmentType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/ApartmentType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/BhkType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/BhkType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/OccupationList.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/OccupationList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/Parking.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/Parking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/TenantType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/TenantType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/ChangePasswordResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/ChangePasswordResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/ForgotPasswordResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/ForgotPasswordResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/LoginResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/LoginResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/RegistrationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Model/RegistrationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Adapters/HistoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Adapters/HistoryAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/AddProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/AddProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/History.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Model/AddPropertyResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Model/AddPropertyResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/UploadPropertyImages.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/UploadPropertyImages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Services/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Services/ApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Services/ApiInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Services/ApiInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/Adapters/PropertyImagePagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/Adapters/PropertyImagePagerAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/PropertyDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/PropertyDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/SearchProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/SearchProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/SearchPropertyResults.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant/SearchPropertyResults.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/utils/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/utils/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/img3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/img4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/img6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/img7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/img8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/img_rectangular_shape.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/img_rectangular_shape.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_add_property.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_add_property.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_forgot_password.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_forgot_password.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_password_change.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_password_change.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_property_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_property_details.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_search_property.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_search_property.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_search_property_results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_search_property_results.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_searchpropertyresultsadapter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_searchpropertyresultsadapter.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_category.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_role.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_role.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_upload_property_images.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_upload_property_images.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/adapter_owner_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/adapter_owner_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/imges_items.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/imges_items.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +108,14 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="resourceFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -59,12 +126,20 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="CRV7N18829002119" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-08-11T06:12:57.531Z" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
   </component>
   <component name="RecentsManager">
+    <key name="android.template.1751693534">
+      <recent name="com.example.RentalManagement.Tenant" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner" />
       <recent name="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Tenant" />
       <recent name="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities" />
@@ -145,13 +220,53 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="441" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1596089752047">
+    <state x="516" y="101" width="374" height="599" key="#com.intellij.ide.util.MemberChooser" timestamp="1597126440005">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state x="441" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/50.27.1316.741@50.27.1316.741" timestamp="1596089752047" />
-    <state x="557" y="212" width="292" height="377" key="AndroidCreateXmlResourceDialog" timestamp="1596091042441">
+    <state x="516" y="101" width="374" height="599" key="#com.intellij.ide.util.MemberChooser/50.27.1316.741@50.27.1316.741" timestamp="1597126440005" />
+    <state x="391" y="125" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1596166051744">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state x="557" y="212" width="292" height="377" key="AndroidCreateXmlResourceDialog/50.27.1316.741@50.27.1316.741" timestamp="1596091042441" />
+    <state x="391" y="125" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/50.27.1316.741@50.27.1316.741" timestamp="1596166051744" />
+    <state x="441" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1596950552517">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state x="441" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/50.27.1316.741@50.27.1316.741" timestamp="1596950552517" />
+    <state x="291" y="155" width="824" height="491" key="AndroidCreateResourceFileDialog" timestamp="1596945166420">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state x="291" y="155" width="824" height="491" key="AndroidCreateResourceFileDialog/50.27.1316.741@50.27.1316.741" timestamp="1596945166420" />
+    <state x="557" y="212" width="292" height="384" key="AndroidCreateXmlResourceDialog" timestamp="1597070120695">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state x="557" y="212" width="292" height="384" key="AndroidCreateXmlResourceDialog/50.27.1316.741@50.27.1316.741" timestamp="1597070120695" />
+    <state width="1270" height="72" key="GridCell.Tab.0.bottom" timestamp="1597140269564">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state width="1270" height="72" key="GridCell.Tab.0.bottom/50.27.1316.741@50.27.1316.741" timestamp="1597140269564" />
+    <state width="1270" height="72" key="GridCell.Tab.0.center" timestamp="1597140269562">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state width="1270" height="72" key="GridCell.Tab.0.center/50.27.1316.741@50.27.1316.741" timestamp="1597140269562" />
+    <state width="1270" height="72" key="GridCell.Tab.0.left" timestamp="1597140269562">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state width="1270" height="72" key="GridCell.Tab.0.left/50.27.1316.741@50.27.1316.741" timestamp="1597140269562" />
+    <state width="1270" height="72" key="GridCell.Tab.0.right" timestamp="1597140269563">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state width="1270" height="72" key="GridCell.Tab.0.right/50.27.1316.741@50.27.1316.741" timestamp="1597140269563" />
+    <state x="480" y="177" width="446" height="447" key="chooseDestDirectoryDialog" timestamp="1596950510399">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state x="480" y="177" width="446" height="447" key="chooseDestDirectoryDialog/50.27.1316.741@50.27.1316.741" timestamp="1596950510399" />
+    <state x="364" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1597117761007">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state x="364" y="225" key="com.intellij.ide.util.TipDialog/50.27.1316.741@50.27.1316.741" timestamp="1597117761007" />
+    <state x="372" y="174" key="run.anything.popup" timestamp="1597074330647">
+      <screen x="50" y="27" width="1316" height="741" />
+    </state>
+    <state x="372" y="174" key="run.anything.popup/50.27.1316.741@50.27.1316.741" timestamp="1597074330647" />
   </component>
 </project>

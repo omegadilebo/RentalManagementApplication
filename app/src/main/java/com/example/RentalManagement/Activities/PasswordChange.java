@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -58,7 +59,7 @@ public class PasswordChange extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirmPassword);
         updatePassword = findViewById(R.id.updatePassword);
         Intent i = getIntent();
-        mobileNumber = i.getStringExtra("mobileNumber");
+        mobileNumber = i.getStringExtra("MobileNo");
         networkConnection = new NetworkConnection(this);
         progressDialog = new ProgressDialog(this, R.style.progressDialogStyle);
 
@@ -86,13 +87,7 @@ public class PasswordChange extends AppCompatActivity {
         } else {
             if (getPassword.equals(getConfirmPassword)) {
                 if (networkConnection.isConnectingToInternet()) {
-                    try {
                         changePassword(mobileNumber, getPassword);
-                    } catch (Exception e) {
-                        if (progressDialog != null) {
-                            progressDialog.cancel();
-                        }
-                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                 }
@@ -104,11 +99,11 @@ public class PasswordChange extends AppCompatActivity {
 
     /*updating new password*/
     private void changePassword(String mobileNumber, String newPassword) {
-        /*Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);*/
+        try {
         progressDialog.setMessage("Please wait ...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
+            Log.d("TAG", "changePassword: "+mobileNumber+"\n"+newPassword);
         apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
         Call<ChangePasswordResponse> call = apiInterface.getChangePasswordStatus(new ChangePasswordResponse(mobileNumber, newPassword));
         call.enqueue(new Callback<ChangePasswordResponse>() {
@@ -116,12 +111,15 @@ public class PasswordChange extends AppCompatActivity {
             public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
                 changePasswordResponse = response.body();
                 try {
-                    if (changePasswordResponse.getStatus().equalsIgnoreCase("success")) {
+                    Log.d("TAG", "onResponse: "+changePasswordResponse.getStatus());
+                    if (changePasswordResponse.getStatus().equalsIgnoreCase("SUCCESS")) {
                         progressDialog.cancel();
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                         Toast.makeText(PasswordChange.this, "Password Changed Successfully", Toast.LENGTH_SHORT).show();
+                    }else{
+                        progressDialog.cancel();
                     }
                 } catch (Exception e) {
                     progressDialog.cancel();
@@ -133,6 +131,11 @@ public class PasswordChange extends AppCompatActivity {
                 progressDialog.cancel();
             }
         });
+        } catch (Exception e) {
+            if (progressDialog != null) {
+                progressDialog.cancel();
+            }
+        }
     }
 
     /*to change statusbar color*/

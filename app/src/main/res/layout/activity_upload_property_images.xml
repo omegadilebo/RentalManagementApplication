@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="image1"
+            android:text="@string/image_1"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -52,13 +52,14 @@
             android:layout_marginEnd="70dp"
             android:visibility="gone">
 
-            <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+            <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/image1"
-                app:siShape="@drawable/img_rectangular_shape"
+                android:scaleType="centerCrop"
+                android:background="@drawable/img_rectangular_shape"
                 android:layout_centerInParent="true"
-                app:siSquare="true"/>
+               />
 
             <ImageView
                 android:id="@+id/clear1"
@@ -83,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="Image 2:-"
+            android:text="@string/image_2"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -107,13 +108,14 @@
             android:layout_marginEnd="70dp"
             android:visibility="gone">
 
-            <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+            <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/image2"
-                app:siShape="@drawable/img_rectangular_shape"
+                android:scaleType="centerCrop"
+                android:background="@drawable/img_rectangular_shape"
                 android:layout_centerInParent="true"
-                app:siSquare="true"/>
+                />
 
             <ImageView
                 android:id="@+id/clear2"
@@ -137,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="Image 3:-"
+            android:text="@string/image_3"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -161,13 +163,14 @@
             android:layout_marginEnd="70dp"
             android:visibility="gone">
 
-            <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+            <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/image3"
-                app:siShape="@drawable/img_rectangular_shape"
+                android:scaleType="centerCrop"
+                android:background="@drawable/img_rectangular_shape"
                 android:layout_centerInParent="true"
-                app:siSquare="true"/>
+                />
 
             <ImageView
                 android:id="@+id/clear3"
@@ -187,7 +190,7 @@
         android:layout_marginRight="30dp">
 
         <Button
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:id="@+id/upload"

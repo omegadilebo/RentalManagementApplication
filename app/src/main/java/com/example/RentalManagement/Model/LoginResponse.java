@@ -1,8 +1,18 @@
 package com.example.RentalManagement.Model;
 
 public class LoginResponse {
-  String MobileNo;
+    public String getMobileNo() {
+        return MobileNo;
+    }
+
+    String MobileNo;
     String Password;
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    String UserID;
 
     public String getStatus() {
         return Status;

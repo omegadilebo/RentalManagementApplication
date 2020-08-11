@@ -1,27 +1,51 @@
 package com.example.RentalManagement.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class RegistrationResponse {
 
-    String UserName, UserAge, Occupation, Gender, MobileNo, Passwrd, IMENo,Otp;
+    String UserName;
+    String UserAge;
+    String Occupation;
+    String Gender;
+    String MobileNo;
+    String Passwrd;
+    String Roleid;
+    String IMENo;
+    String UserID;
 
-    public RegistrationResponse(String otp) {
-        this.Otp = otp;
+    public String getUserID() {
+        return UserID;
     }
 
-    public RegistrationResponse(String userName, String userAge, String occupation, String gender, String mobileNo, String passwrd, String IMENo) {
+    public String getOTPNumber() {
+        return OTPNumber;
+    }
+
+    String OTPNumber;
+
+
+
+    public RegistrationResponse(String userName, String userAge, String occupation, String gender, String mobileNo, String passwrd, String i,String IMENo) {
         this.UserName = userName;
         this.UserAge = userAge;
-        this.Occupation = occupation;
         this.Gender = gender;
+        this.Occupation = occupation;
         this.MobileNo = mobileNo;
         this.Passwrd = passwrd;
+        this.Roleid = i;
         this.IMENo = IMENo;
     }
+
+    public RegistrationResponse(String getMobileNumber, String imei) {
+        this.MobileNo = getMobileNumber;
+        this.IMENo = imei;
+    }
+
 
     public String getStatus() {
         return Status;
     }
-
     String Status;
 
 }

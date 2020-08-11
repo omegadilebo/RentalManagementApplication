@@ -135,7 +135,7 @@
             android:id="@+id/password"/>
     </com.google.android.material.textfield.TextInputLayout>
         <Button
-            android:layout_width="100dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:id="@+id/sendOtp"
             android:layout_marginTop="20dp"
@@ -172,11 +172,11 @@
                     android:textCursorDrawable="@null"
                     android:singleLine="true"
                     android:maxLines="1"
-                    android:maxLength="4"
+                    android:maxLength="6"
                     android:id="@+id/otp"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
-                android:layout_width="150dp"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/submit"
                 android:layout_marginTop="20dp"

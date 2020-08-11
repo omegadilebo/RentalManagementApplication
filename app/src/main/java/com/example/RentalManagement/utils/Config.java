@@ -12,13 +12,11 @@ public class Config {
         editor.putString("loginStatus",status);
         editor.commit();
     }
-
     public static String getLoginStatus(Context c)
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
         return sharedPreferences.getString("loginStatus","");
     }
-
     public static void saveLoginNumber(Context applicationContext, String getMobileNumber) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -29,5 +27,15 @@ public class Config {
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
         return sharedPreferences.getString("loginNumber","");
+    }
+    public static void saveUserId(Context applicationContext, String userID) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("UserId", userID);
+        editor.commit();
+    }
+    public static String getUserId(Context c){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        return sp.getString("UserId","");
     }
 }

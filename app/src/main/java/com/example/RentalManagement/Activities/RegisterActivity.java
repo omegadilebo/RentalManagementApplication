@@ -6,12 +6,17 @@
  */
 package com.example.RentalManagement.Activities;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -27,13 +32,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 
+import com.example.RentalManagement.BuildConfig;
 import com.example.RentalManagement.Dialogs.OccupationList;
 import com.example.RentalManagement.Model.RegistrationResponse;
+import com.example.RentalManagement.Owner.AddProperty;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
@@ -61,8 +70,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ProgressDialog progressDialog;
     NetworkConnection networkConnection;
     RegistrationResponse registrationResponse;
-    String IMEI;
+    TelephonyManager telephonyManager;
+    String OTPNumber, IMEI;
+    public static int REQUEST_CODE = 200;
+    String UserID;
+    int i, j, k, r;
 
+    @SuppressLint("HardwareIds")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,12 +125,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         sendOtp.setOnClickListener(this);
         submit.setOnClickListener(this);
 
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-
-        Log.d("TAG", "onCreate: "+telephonyManager.getDeviceId());
+        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         networkConnection = new NetworkConnection(this);
         progressDialog = new ProgressDialog(this, R.style.progressDialogStyle);
-
     }
 
     /*on click for widgets*/
@@ -133,17 +144,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 getOtp = otp.getText().toString().trim();
                 if (getOtp.length() == 0) {
                     otp.setError("Please Enter OTP");
-                } else if (getOtp.length() < 3) {
-                    otp.setError("OTP should be 4 digits");
+                } else if (getOtp.length() < 6) {
+                    otp.setError("OTP should be 6 digits");
                 } else {
                     if (networkConnection.isConnectingToInternet()) {
-                        try {
-                            submitOtp(getOtp);
-                        } catch (Exception e) {
-                            if (progressDialog != null) {
-                                progressDialog.cancel();
+                            if (getOtp.equals(OTPNumber)) {
+                                submitOtp(getName, getAge, getGender, getOccupation, getMobileNumber, getPassword, "0", IMEI);
+                            } else {
+                                Toast.makeText(this, "Enter Correct OTP", Toast.LENGTH_SHORT).show();
                             }
-                        }
                     } else {
                         Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     }
@@ -174,30 +183,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             mobileNumber.setError("Enter your number");
         } else if (getMobileNumber.length() < 10) {
             mobileNumber.setError("Enter 10 digit Mobile Number");
-        } else if (!getMobileNumber.matches("[0-9.?]*")) {
-            mobileNumber.setError("Only numbers are allowed");
-        } else if (getMobileNumber.startsWith("0") ||
-                getMobileNumber.startsWith("1") ||
-                getMobileNumber.startsWith("2") ||
-                getMobileNumber.startsWith("3") ||
-                getMobileNumber.startsWith("4") ||
-                getMobileNumber.startsWith("5")) {
-            mobileNumber.setError("Enter a valid number");
         } else if (getPassword.length() == 0) {
             password.setError("Enter password");
         } else if (getPassword.length() < 8) {
             password.setError("minimum 8 charcters");
         } else {
             getGender = radioButton.getText().toString();
-            if (getMobileNumber.length() == 10) {
+            if (getMobileNumber.length() == 10 && getMobileNumber.matches("^[6-9]\\d{9}$")) {
                 if (networkConnection.isConnectingToInternet()) {
-                    try {
-                        sendOtp(getName, getAge, getOccupation, getGender, getMobileNumber, getPassword);
-                    } catch (Exception e) {
-                        if (progressDialog != null) {
-                            progressDialog.cancel();
+                        if (ActivityCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.READ_PHONE_STATE)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+                        } else {
+                            try {
+                                IMEI = telephonyManager.getDeviceId();
+                            } catch (Exception e) {
+                                Log.d("TAG", "onResponse:5 " + e);
+                            }
+                            sendOtp(getMobileNumber, IMEI);
                         }
-                    }
                 } else {
                     Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                 }
@@ -206,84 +210,125 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /*send otp for registration*/
-    private void sendOtp(String getName, String getAge, String getOccupation, String getGender, String getMobileNumber, String getPassword) {
-       /* for (int i = 0; i < registerLayout.getChildCount(); i++) {
-            View v = registerLayout.getChildAt(i);
-            v.setEnabled(false);
-        }
-        sendOtp.setVisibility(View.GONE);
-        otpLayout.setVisibility(View.VISIBLE);*/
-      progressDialog.setMessage("Please wait ...");
-      progressDialog.setCancelable(false);
-      progressDialog.show();
-      apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-      Call<RegistrationResponse> call = apiInterface.SendOtpStatus(new RegistrationResponse(getName, getAge, getOccupation,
-              getGender, getMobileNumber, getPassword, IMEI));
-      call.enqueue(new Callback<RegistrationResponse>() {
-          @Override
-          public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
-              registrationResponse = response.body();
-
-              try {
-                  Log.d("TAG", "onResponse: " + registrationResponse);
-                  progressDialog.cancel();
-                   /* if (registrationResponse.getStatus().equals("OK")) {
-                        progressDialog.cancel();
-                        for (int i = 0; i < registerLayout.getChildCount(); i++) {
-                            View v = registerLayout.getChildAt(i);
-                            v.setEnabled(false);
+    private void sendOtp(String getMobileNumber, String IMEI) {
+        try {
+            progressDialog.setMessage("Please wait ...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+            Call<RegistrationResponse> call = apiInterface.SendOtpStatus(new RegistrationResponse(getMobileNumber, IMEI));
+            call.enqueue(new Callback<RegistrationResponse>() {
+                @Override
+                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                    registrationResponse = response.body();
+                    try {
+                        Log.d("TAG", "onResponse2: " + registrationResponse.getStatus()+"\n"+
+                                registrationResponse.getOTPNumber());
+                        if (registrationResponse.getStatus().equals("0")) {//new user
+                            for (int i = 0; i < registerLayout.getChildCount(); i++) {
+                                View v = registerLayout.getChildAt(i);
+                                v.setEnabled(false);
+                            }
+                            sendOtp.setVisibility(View.GONE);
+                            otpLayout.setVisibility(View.VISIBLE);
+                            OTPNumber = registrationResponse.getOTPNumber();
+                            Log.d("TAG", "onResponse3: " + OTPNumber);
+                            Toast.makeText(RegisterActivity.this, OTPNumber, Toast.LENGTH_SHORT).show();
+                            progressDialog.cancel();
+                        } else if(registrationResponse.getStatus().equals("1")){//user already existed
+                            progressDialog.cancel();
+                            Toast.makeText(RegisterActivity.this, "The Mobile Number is Already Registered, Try with new Mobile Number", Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.d("TAG", "onResponse:1 ");
+                            progressDialog.cancel();
+                            Toast.makeText(RegisterActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
                         }
-                        sendOtp.setVisibility(View.GONE);
-                        otpLayout.setVisibility(View.VISIBLE);
-                    }*/
-              } catch (Exception e) {
-                  Log.d("TAG", "onResponse:1 " + e);
-                  progressDialog.cancel();
-              }
-          }
+                    } catch (Exception e) {
+                        Log.d("TAG", "onResponse:2 " + e);
+                        Toast.makeText(RegisterActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+                        progressDialog.cancel();
+                    }
+                }
 
-          @Override
-          public void onFailure(Call<RegistrationResponse> call, Throwable t) {
-              Log.d("TAG", "onResponse:2 " + t);
-              progressDialog.cancel();
-          }
-      });
-      ;
+                @Override
+                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+                    Log.d("TAG", "onResponse:3 " + t);
+                    Toast.makeText(RegisterActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+                    progressDialog.cancel();
+                }
+            });
+        } catch (Exception e) {
+            if(progressDialog!=null){
+                progressDialog.cancel();
+            }
+            Toast.makeText(RegisterActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+            Log.d("TAG", "onResponse:4 : "+e);
+        }
     }
 
     /*submit otp for registration*/
-    private void submitOtp(String getOtp) {
-        /*Config.saveLoginStatus(getApplicationContext(), "1");
-        Intent i = new Intent(this, SelectCategory.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);*/
-        progressDialog.setMessage("Please wait ...");
-        progressDialog.show();
-        apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-        Call<RegistrationResponse> call = apiInterface.ValidateOtp(new RegistrationResponse(getOtp));
-        call.enqueue(new Callback<RegistrationResponse>() {
-            @Override
-            public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
-                registrationResponse = response.body();
-                try {
-                    if (registrationResponse.getStatus().equals("OK")) {
+    private void submitOtp(String getName, String getAge, String getGender,
+                           String getOccupation, String getMobileNumber, String getPassword,
+                           String i, String imei) {
+        try {
+            progressDialog.setMessage("Please wait ...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+            Call<RegistrationResponse> call = apiInterface.ValidateOtp(new RegistrationResponse(
+                    getName, getAge, getGender, getOccupation, getMobileNumber, getPassword, i, imei));
+            call.enqueue(new Callback<RegistrationResponse>() {
+                @Override
+                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                    registrationResponse = response.body();
+                    try {
+                        if (registrationResponse.getStatus().equalsIgnoreCase("SUCCESS")) {
+                            UserID = registrationResponse.getUserID();
+                            Toast.makeText(RegisterActivity.this, UserID, Toast.LENGTH_LONG).show();
+                            Config.saveUserId(getApplicationContext(), UserID);
+                            Config.saveLoginStatus(getApplicationContext(), "1");
+                            Intent i = new Intent(getApplicationContext(), SelectCategory.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(i);
+                            progressDialog.cancel();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "please try again later", Toast.LENGTH_SHORT).show();
+                            progressDialog.cancel();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterActivity.this, "please try again later", Toast.LENGTH_SHORT).show();
                         progressDialog.cancel();
-                        Config.saveLoginStatus(getApplicationContext(), "1");
-                        Intent i = new Intent(getApplicationContext(), SelectCategory.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);
                     }
-                } catch (Exception e) {
+                }
+
+                @Override
+                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+                    Log.d("TAG", "onFailure: "+t);
                     progressDialog.cancel();
                 }
-            }
+            });
+        }catch (Exception e){
+            Log.d("TAG", "submitOtp: "+e);
+        }
+    }
 
-            @Override
-            public void onFailure(Call<RegistrationResponse> call, Throwable t) {
-                progressDialog.cancel();
+    /*read phone state permission result*/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterActivity.this, Manifest.permission.READ_PHONE_STATE)) {
+                    //when click on deny
+                } else {
+                    //when click on don't show again
+                    Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID));
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                }
             }
-        });
-        ;
+        }
     }
 
     /*changing status bar color*/

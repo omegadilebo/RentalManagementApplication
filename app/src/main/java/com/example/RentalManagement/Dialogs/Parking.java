@@ -21,7 +21,7 @@ public class Parking extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         final String[] parking = this.getResources().getStringArray(R.array.parking);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
         builder.setTitle("Parking Type");
         builder.setCancelable(false);
         builder.setItems(parking, new DialogInterface.OnClickListener() {

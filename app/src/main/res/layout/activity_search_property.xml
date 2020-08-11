@@ -152,10 +152,9 @@
     <TextView
         android:id="@+id/search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="15dp"
-        android:background="@drawable/rectangular_shape"
+        android:background="@color/design_default_color_primary"
         android:gravity="center"
         android:text="@string/search"
         android:textColor="@color/white"

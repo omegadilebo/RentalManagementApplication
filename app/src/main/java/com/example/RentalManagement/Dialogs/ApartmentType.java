@@ -21,7 +21,7 @@ public class ApartmentType extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         final String[] apartment = this.getResources().getStringArray(R.array.apartmentType);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
         builder.setTitle("Select Apartment Type");
         builder.setCancelable(false);
         builder.setItems(apartment, new DialogInterface.OnClickListener() {

@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.RentalManagement.Dialogs.LogOut;
+import com.example.RentalManagement.Owner.AddProperty;
 import com.example.RentalManagement.Owner.History;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Tenant.SearchProperty;
@@ -103,6 +104,7 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
                                 Toast.makeText(this, "Select Property Type", Toast.LENGTH_SHORT).show();
                             } else {
                                 Intent i = new Intent(this, History.class);
+                              //  Intent i = new Intent(this, AddProperty.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
                             }
@@ -128,6 +130,7 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
     /*onclick owner*/
     private void onClickOwner() {
         role = owner.getText().toString();
+        owner.setBackground(getDrawable(R.drawable.rectangular_shape));
         owner.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
         owner.setTextColor(Color.WHITE);
         relativeLayout.setVisibility(View.VISIBLE);
@@ -139,6 +142,7 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
     private void onClickTenant() {
         role = tenant.getText().toString();
         relativeLayout.setVisibility(View.VISIBLE);
+        tenant.setBackground(getDrawable(R.drawable.rectangular_shape));
         tenant.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
         tenant.setTextColor(Color.WHITE);
         owner.setBackground(getDrawable(R.drawable.rectangular_shape));

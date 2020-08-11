@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/relativeLayout"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
@@ -52,32 +52,33 @@
                 android:id="@+id/residential"
                 android:text="@string/residential"
                 android:gravity="center"
+                android:textSize="15sp"
                 android:background="@drawable/rectangular_shape"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerInParent="true" />
 
             <TextView
                 android:id="@+id/commercial"
-                android:layout_width="100dp"
+                android:layout_width="130dp"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangular_shape"
                 android:text="@string/commercial"
+                android:textSize="15sp"
                 android:layout_centerInParent="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/next"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_margin="20dp"
-        android:background="@drawable/rectangular_shape"
+        android:background="@color/design_default_color_primary"
         android:gravity="center"
-        android:text="Next"
+        android:text="@string/next"
         android:textColor="@color/white"
         android:textSize="18sp" />
 </RelativeLayout>

@@ -363,7 +363,7 @@ public class SearchProperty extends AppCompatActivity implements
                 Location location = locationManager
                         .getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (location != null) {
-                    getLocationDetails(new LatLng(location.getLatitude(), location.getLongitude()));
+                    getLocationDetails(new LatLng(location.getLatitude(), location.getLongitude()),"locationClick");
                 } else {
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
@@ -372,7 +372,7 @@ public class SearchProperty extends AppCompatActivity implements
                     Location location1 = locationManager
                             .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if (location1 != null) {
-                        getLocationDetails(new LatLng(location1.getLatitude(), location1.getLongitude()));
+                        getLocationDetails(new LatLng(location1.getLatitude(), location1.getLongitude()),"locationClick");
                     } else {
                         Toast.makeText(SearchProperty.this, "unable to get current location", Toast.LENGTH_SHORT).show();
                     }
@@ -393,19 +393,21 @@ public class SearchProperty extends AppCompatActivity implements
             latitude = destinationlocation.getLatitude();
             longitude = destinationlocation.getLongitude();
             latLng = new LatLng(latitude, longitude);
-            getLocationDetails(latLng);
+            getLocationDetails(latLng,"suggestionClick");
         } catch (Exception e) {
         }
     }
 
     /*converting latlng to get the location name*/
-    private void getLocationDetails(LatLng latLng) {
+    private void getLocationDetails(LatLng latLng, String s) {
         Geocoder geocoder = new Geocoder(SearchProperty.this, Locale.getDefault());
         try {
             Log.d("TAG", "latlng" + latLng + "  lat" + latLng.latitude + "long" + latLng);
             // List<Address> addresses = geocoder.getFromLocation(18.277481,   83.900032, 1);
             addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            enterLocation.setText(addresses.get(0).getAddressLine(0));
+            if(s.equalsIgnoreCase("locationClick")) {
+                enterLocation.setText(addresses.get(0).getAddressLine(0));
+            }
             currentLocation.setVisibility(View.GONE);
             clear.setVisibility(View.VISIBLE);
             locality = addresses.get(0).getLocality();

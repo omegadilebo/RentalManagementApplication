@@ -6,14 +6,17 @@
  */
 package com.example.RentalManagement.Owner;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +33,16 @@ import com.example.RentalManagement.Dialogs.LogOut;
 import com.example.RentalManagement.Owner.Adapters.HistoryAdapter;
 import com.example.RentalManagement.Owner.Model.HistoryResponse;
 import com.example.RentalManagement.R;
+import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
 import com.example.RentalManagement.Services.NetworkConnection;
+import com.example.RentalManagement.utils.Config;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class History extends AppCompatActivity {
     /*declarations*/
@@ -44,11 +53,14 @@ public class History extends AppCompatActivity {
     HistoryResponse historyResponse;
     List<HistoryResponse> data;
     NetworkConnection networkConnection;
+    ProgressDialog progressDialog;
     ApiInterface apiInterface;
     /*dummy images*/
-    int[] images = new int[]{R.drawable.img3,
-            R.drawable.img4, R.drawable.img6,
-            R.drawable.img7, R.drawable.img8};
+    int[] images = new int[]{R.drawable.inside,
+            R.drawable.specialarea, R.drawable.outside
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +78,6 @@ public class History extends AppCompatActivity {
                 finish();
             }
         });
-        /*Intent i = getIntent();
-        final Bundle bundle = i.getBundleExtra("bundle");
-        Log.d("TAG", "onCreate: "+bundle.getString("category")+"\n"+
-                bundle.getString("role")+"\n"+
-                bundle.getString("propertyType"));*/
         addProperty = findViewById(R.id.addProperty);
         addProperty.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
         recyclerView = findViewById(R.id.recyclerview);
@@ -79,42 +86,59 @@ public class History extends AppCompatActivity {
         adapter = new HistoryAdapter(images,getApplicationContext());
         recyclerView.setAdapter(adapter);
         networkConnection = new NetworkConnection(this);
-       // getHistory();
+        progressDialog = new ProgressDialog(this, R.style.progressDialogStyle);
+        //getHistory();
         addProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddProperty.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-             //   i.putExtra("bundle", bundle);
+                i.putExtra("buttonName","addProperty");
                 startActivity(i);
             }
         });
     }
 
-    /*to get history of the owner properties*/
-    /*private void getHistory(){
-        try {
-            if (networkConnection.isConnectingToInternet()) {
+    /*
+        to get history of the owner properties
+    */
+    /*private void getHistory() {
+        if (networkConnection.isConnectingToInternet()) {
+            try {
+                progressDialog.setMessage("Fetching Previous Adds.....");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-                Call<List<HistoryResponse>> call = apiInterface.
-                        getHistory(new HistoryResponse(Config.getLoginNumber(getApplicationContext())));
+                Call<List<HistoryResponse>> call = apiInterface.getHistory(9);
                 call.enqueue(new Callback<List<HistoryResponse>>() {
                     @Override
                     public void onResponse(Call<List<HistoryResponse>> call, Response<List<HistoryResponse>> response) {
                         data = response.body();
-                        adapter = new HistoryAdapter(data,getApplicationContext());
-                        recyclerView.setAdapter(adapter);
+                        Log.d("TAG", "getHistory1: "+data);
+                        try {
+                            Log.d("TAG", "getHistory2: ");
+                            progressDialog.cancel();
+                            adapter = new HistoryAdapter(data, getApplicationContext());
+                            recyclerView.setAdapter(adapter);
+                        } catch (Exception e) {
+                            Log.d("TAG", "getHistory3: "+e);
+                            progressDialog.cancel();
+                        }
                     }
                     @Override
                     public void onFailure(Call<List<HistoryResponse>> call, Throwable t) {
-
+                        Log.d("TAG", "getHistory4: "+t);
+                        progressDialog.cancel();
                     }
                 });
-            } else {
-                Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.d("TAG", "getHistory5: "+e);
+                if (progressDialog != null) {
+                    progressDialog.cancel();
+                }
             }
-        }catch (Exception e){
-
+        } else {
+            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }*/
 
@@ -133,6 +157,7 @@ public class History extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_icons, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -151,7 +176,7 @@ public class History extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent i = new Intent(getApplicationContext(), SelectRole.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
 }

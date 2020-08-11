@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -23,6 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.RentalManagement.Dialogs.ApartmentType;
+import com.example.RentalManagement.Dialogs.SortDialog;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
@@ -30,18 +33,22 @@ import com.example.RentalManagement.Services.NetworkConnection;
 import com.example.RentalManagement.Tenant.Adapters.SearchPropertyResultsAdapter;
 import com.example.RentalManagement.Tenant.Model.SearchPropertyResponse;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchPropertyResults extends AppCompatActivity {
+public class SearchPropertyResults extends AppCompatActivity implements View.OnClickListener, SortDialog.SortDialogListener {
     String category, propertyType, locality, subLocality, apartmentType, bhk, rent, extent;
     Bundle b;
     Toolbar toolbar;
     RecyclerView recyclerView;
-    int[] images = new int[]{R.drawable.img3,
-            R.drawable.img4, R.drawable.img6,
-            R.drawable.img7, R.drawable.img8};
+    LinearLayout sort, filter;
+    int[] images = new int[]{R.drawable.inside,
+            R.drawable.specialarea, R.drawable.outside
+            };
     SearchPropertyResultsAdapter adapter;
     SearchPropertyResponse searchPropertyResponse;
     ApiInterface apiInterface;
@@ -78,11 +85,16 @@ public class SearchPropertyResults extends AppCompatActivity {
                 finish();
             }
         });
+        sort = findViewById(R.id.sort);
+        filter = findViewById(R.id.filter);
+        sort.setOnClickListener(this);
+        filter.setOnClickListener(this);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         adapter = new SearchPropertyResultsAdapter(images, getApplicationContext());
         recyclerView.setAdapter(adapter);
+
 
     }
 
@@ -133,4 +145,25 @@ public class SearchPropertyResults extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.sort:
+                new SortDialog().show(getFragmentManager(),"sort");
+                break;
+            case R.id.filter:
+                break;
+        }
+    }
+
+    @Override
+    public void getSortDialog(String s) {
+        Log.d("TAG", "getSortDialog: "+s);
+        /*Collections.sort(images, new Comparator() {
+            @Override
+            public int compare(images o1, studentData o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        });*/
+    }
 }

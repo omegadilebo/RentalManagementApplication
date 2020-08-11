@@ -6,10 +6,18 @@
  */
 package com.example.RentalManagement.Activities;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,11 +26,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 
+import com.example.RentalManagement.BuildConfig;
+import com.example.RentalManagement.Model.ForgotPasswordResponse;
+import com.example.RentalManagement.Model.ForgotPasswordResponse;
 import com.example.RentalManagement.Model.ForgotPasswordResponse;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
@@ -42,9 +55,12 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     EditText mobileNumber, otp;
     Button sendOtp, submitOtp;
     ApiInterface apiInterface;
-    ForgotPasswordResponse forgotPasswordResponse;
     NetworkConnection networkConnection;
     ProgressDialog progressDialog;
+    String MobileNo,OTPNumber, IMEI;
+    TelephonyManager telephonyManager;
+    public static int REQUEST_CODE = 200;
+    ForgotPasswordResponse forgotPasswordResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +89,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
         sendOtp.setOnClickListener(this);
         submitOtp.setOnClickListener(this);
+        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         networkConnection = new NetworkConnection(this);
         progressDialog = new ProgressDialog(this, R.style.progressDialogStyle);
     }
@@ -91,28 +108,29 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sendOtp:
-                if (mobileNumber.getText().length() == 0) {
+                MobileNo = mobileNumber.getText().toString().trim();
+                if (MobileNo.length() == 0) {
                     mobileNumber.setError("Enter your number");
-                } else if (mobileNumber.getText().length() < 10) {
+                } else if (MobileNo.length() < 10) {
                     mobileNumber.setError("Enter 10 digit Mobile Number");
-                } else if (!mobileNumber.getText().toString().matches("[0-9.?]*")) {
+                } else if (!MobileNo.matches("[0-9.?]*")) {
                     mobileNumber.setError("Only numbers are allowed");
-                } else if (mobileNumber.getText().toString().startsWith("0") ||
-                        mobileNumber.getText().toString().startsWith("1") ||
-                        mobileNumber.getText().toString().startsWith("2") ||
-                        mobileNumber.getText().toString().startsWith("3") ||
-                        mobileNumber.getText().toString().startsWith("4") ||
-                        mobileNumber.getText().toString().startsWith("5")) {
+                } else if (MobileNo.startsWith("0") ||
+                        MobileNo.startsWith("1") ||
+                        MobileNo.startsWith("2") ||
+                        MobileNo.startsWith("3") ||
+                        MobileNo.startsWith("4") ||
+                        MobileNo.startsWith("5")) {
                     mobileNumber.setError("Enter a valid number");
                 } else {
-                    if (mobileNumber.getText().toString().length() == 10) {
+                    if (MobileNo.length() == 10) {
                         if (networkConnection.isConnectingToInternet()) {
-                            try {
-                                sendOtp(mobileNumber.getText().toString());
-                            } catch (Exception e) {
-                                if (progressDialog != null) {
-                                    progressDialog.cancel();
-                                }
+                            if (ActivityCompat.checkSelfPermission(ForgotPasswordActivity.this, Manifest.permission.READ_PHONE_STATE)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(ForgotPasswordActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+                            } else {
+                                    IMEI = telephonyManager.getDeviceId();
+                                sendOtp(MobileNo, IMEI);
                             }
                         } else {
                             Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
@@ -125,19 +143,20 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 if (getOtp.length() == 0) {
                     otp.setError("Enter OTP");
                 } else if (getOtp.length() < 6) {
-                    otp.setError("Enter 4 digit OTP");
+                    otp.setError("Enter 6 digit OTP");
                 } else {
                     if (getOtp.length() == 6) {
                         if (networkConnection.isConnectingToInternet()) {
-                            try {
-                                submitOtp(mobileNumber.getText().toString(), getOtp);
-                            } catch (Exception e) {
-                                if (progressDialog != null) {
-                                    progressDialog.cancel();
+                                if(getOtp.equals(OTPNumber)){
+                                    Intent i = new Intent(getApplicationContext(), PasswordChange.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    i.putExtra("MobileNo",MobileNo);
+                                    startActivity(i);
+                                }else{
+                                    Toast.makeText(this, "Please Enter Correct Otp", Toast.LENGTH_LONG).show();
                                 }
-                            }
                         } else {
-                            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -145,76 +164,89 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         }
     }
 
-    /*sending otp to the registered mobile number*/
-    private void sendOtp(String mobileNumber) {
-       /* for (int i = 0; i < sendOtpLayout.getChildCount(); i++) {
-            View v = sendOtpLayout.getChildAt(i);
-            v.setEnabled(false);
-        }
-        submitOtpLayout.setVisibility(View.VISIBLE);*/
-       progressDialog.setTitle("Send OTP");
-        progressDialog.setMessage("Please wait We are sending OTP...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-        Call<ForgotPasswordResponse> call = apiInterface.getPasswordSendOtpStatus(new ForgotPasswordResponse(mobileNumber));
-        call.enqueue(new Callback<ForgotPasswordResponse>() {
-            @Override
-            public void onResponse(Call<ForgotPasswordResponse> call, Response<ForgotPasswordResponse> response) {
-                forgotPasswordResponse = response.body();
-                try {
-                    if (forgotPasswordResponse.getOTPNumber() != null) {
-                        progressDialog.cancel();
-                        for (int i = 0; i < sendOtpLayout.getChildCount(); i++) {
-                            View v = sendOtpLayout.getChildAt(i);
-                            v.setEnabled(false);
+    private void sendOtp(String mobileNo, String imei) {
+        try{
+            /*for (int i = 0; i < sendOtpLayout.getChildCount(); i++) {
+                View v = sendOtpLayout.getChildAt(i);
+                v.setEnabled(false);
+            }
+            submitOtpLayout.setVisibility(View.VISIBLE);*/
+
+            progressDialog.setTitle("Send OTP");
+            progressDialog.setMessage("Please wait We are sending OTP...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+            Log.d("TAG", "sendOtp: "+mobileNo+"\n"+imei);
+            Call<ForgotPasswordResponse> call = apiInterface.getPasswordSendOtpStatus(new ForgotPasswordResponse(mobileNo,imei));
+            call.enqueue(new Callback<ForgotPasswordResponse>() {
+                @Override
+                public void onResponse(Call<ForgotPasswordResponse> call, Response<ForgotPasswordResponse> response) {
+                    forgotPasswordResponse = response.body();
+                    Log.d("TAG", "sendOtp1: "+response.body());
+                    try {
+                        if (forgotPasswordResponse.getStatus().equals("1")) {
+                            OTPNumber = forgotPasswordResponse.getOTPNumber();
+                            Log.d("TAG", "sendOtp1: "+OTPNumber);
+                            Toast.makeText(ForgotPasswordActivity.this, OTPNumber, Toast.LENGTH_LONG).show();
+                            progressDialog.cancel();
+                            for (int i = 0; i < sendOtpLayout.getChildCount(); i++) {
+                                View v = sendOtpLayout.getChildAt(i);
+                                v.setEnabled(false);
+                            }
+                            submitOtpLayout.setVisibility(View.VISIBLE);
+                        }else if (forgotPasswordResponse.getStatus().equals("0")){
+                            Log.d("TAG", "sendOtp2: "+forgotPasswordResponse.getStatus());
+                            Toast.makeText(ForgotPasswordActivity.this, "Please Enter a Registered Number", Toast.LENGTH_LONG).show();
+                            progressDialog.cancel();
+                        }else {
+                            Log.d("TAG", "sendOtp3: "+forgotPasswordResponse.getStatus());
+                            progressDialog.cancel();
+                            Toast.makeText(ForgotPasswordActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
                         }
-                        submitOtpLayout.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                        progressDialog.cancel();
+                        Log.d("TAG", "sendOtp4: "+e);
+                        Toast.makeText(ForgotPasswordActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
                     }
-                    progressDialog.cancel();
-                } catch (Exception e) {
+                }
+                @Override
+                public void onFailure(Call<ForgotPasswordResponse> call, Throwable t) {
+                    Log.d("TAG", "sendOtp5: "+t);
+                    Toast.makeText(ForgotPasswordActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
                     progressDialog.cancel();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ForgotPasswordResponse> call, Throwable t) {
+            });
+        } catch (Exception e) {
+            Log.d("TAG", "sendOtp: "+e);
+            Toast.makeText(ForgotPasswordActivity.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+            if (progressDialog != null) {
                 progressDialog.cancel();
             }
-        });
+        }
     }
 
-    /*validating otp*/
-    private void submitOtp(final String mobileNumber, String otp) {
-        /*Intent i = new Intent(getApplicationContext(), PasswordChange.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        i.putExtra("mobileNumber",mobileNumber);
-        startActivity(i);*/
-        progressDialog.setMessage("Please wait ...");
-        progressDialog.show();
-        apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-        Call<ForgotPasswordResponse> call = apiInterface.getPasswordSubmitOtpStatus(new ForgotPasswordResponse(mobileNumber, otp));
-        call.enqueue(new Callback<ForgotPasswordResponse>() {
-            @Override
-            public void onResponse(Call<ForgotPasswordResponse> call, Response<ForgotPasswordResponse> response) {
-                forgotPasswordResponse = response.body();
-                try {
-                    if (forgotPasswordResponse.getStatus().equals("OK")) {
-                        progressDialog.cancel();
-                        Intent i = new Intent(getApplicationContext(), PasswordChange.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        i.putExtra("mobilrNumber", mobileNumber);
-                        startActivity(i);
-                    }
-                } catch (Exception e) {
-                    progressDialog.cancel();
+    /*sending otp to the registered mobile number*/
+    /*private void sendOtp(String mobileNumber, String IMEI) {
+        
+    }*/
+
+    /*read phone state permission result*/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(ForgotPasswordActivity.this, Manifest.permission.READ_PHONE_STATE)) {
+                    //when click on deny
+                } else {
+                    //when click on don't show again
+                    Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID));
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
                 }
             }
-
-            @Override
-            public void onFailure(Call<ForgotPasswordResponse> call, Throwable t) {
-                progressDialog.cancel();
-            }
-        });
+        }
     }
 }

@@ -21,7 +21,7 @@ public class TenantType extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         final String[] tenant = this.getResources().getStringArray(R.array.tenantType);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
         builder.setTitle("Select Tenant Type");
         builder.setCancelable(false);
         builder.setItems(tenant, new DialogInterface.OnClickListener() {

@@ -96,6 +96,26 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangular_shape"
                 android:hint="@string/selectApartment" />
+<!--Apartment Name-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15sp"
+                android:text="@string/apartment_name"/>
+
+            <EditText
+                android:id="@+id/apartmentName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangular_shape"
+                android:fontFamily="@font/roboto_light"
+                android:hint="@string/enter_apartment_name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="15sp" />
             <!--bhk type-->
             <TextView
                 android:layout_width="match_parent"
@@ -398,7 +418,7 @@
                 android:hint="@string/enterAddress"
                 android:inputType="textMultiLine"
                 android:textSize="15sp"
-                android:lines="3"
+                android:lines="5"
                 android:minLines="3"
                 android:gravity="top|left"
                 android:scrollbars="vertical"
@@ -409,11 +429,10 @@
     <TextView
         android:id="@+id/save"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="15dp"
-        android:background="@drawable/rectangular_shape"
         android:gravity="center"
+        android:background="@color/design_default_color_primary"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="18sp" />

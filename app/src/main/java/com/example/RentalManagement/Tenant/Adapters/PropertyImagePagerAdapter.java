@@ -1,6 +1,8 @@
 package com.example.RentalManagement.Tenant.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.RentalManagement.R;
+import com.example.RentalManagement.Tenant.PropertyImage;
 
 
 public class PropertyImagePagerAdapter extends PagerAdapter {
@@ -48,7 +51,13 @@ public class PropertyImagePagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "you clicked image " + (position + 1), Toast.LENGTH_LONG).show();
+                Intent i = new Intent(context, PropertyImage.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bundle = new Bundle();
+                bundle.putInt("imageData",images[position]);
+                i.putExtra("bundle", bundle);
+                context.startActivity(i);
+               // Toast.makeText(context, "you clicked image " + (position + 1), Toast.LENGTH_LONG).show();
             }
         });
 

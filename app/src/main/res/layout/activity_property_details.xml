@@ -27,15 +27,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewPager"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="50dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/address"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="100dp"
                 android:layout_below="@+id/line"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center_vertical"
@@ -46,8 +50,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
                 android:src="@drawable/ic_directions" />
 
             <TextView
@@ -291,14 +295,13 @@
         </RelativeLayout>
     </ScrollView>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/contactOwner"
-        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
+        android:background="@color/design_default_color_primary"
         android:gravity="center"
-        android:background="@drawable/rectangular_shape"
-        android:text="Contact Owner"/>
+        android:text="Contact Owner"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </RelativeLayout>

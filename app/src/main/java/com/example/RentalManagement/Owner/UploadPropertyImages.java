@@ -8,6 +8,7 @@ package com.example.RentalManagement.Owner;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,17 +39,24 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 
+import com.example.RentalManagement.Activities.RegisterActivity;
 import com.example.RentalManagement.Dialogs.LogOut;
 import com.example.RentalManagement.Owner.Model.AddPropertyResponse;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
+import com.example.RentalManagement.Services.NetworkConnection;
+import com.example.RentalManagement.utils.BitmapHelper;
+import com.example.RentalManagement.utils.Config;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.Reference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -72,14 +80,25 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
     Button upload;
     ApiInterface apiInterface;
     AddPropertyResponse addPropertyResponse;
-    String locality;
     private static final int PERMISSION_REQUEST_CODE = 104;
     String[] appPermissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
     Uri imageUri1, imageUri2, imageUri3;
-    String filePath;
+    String filePath,buttonName;
+
+    double latitude, longitude;
+    String apartmentType, apartmentName, bhk, extent, rent, floors, floorNo,
+            tenantType, foodType, water, parking, lift,
+            contactTime, address;
+    String[] specialFeatures;
+    String locality, subLocality;
+    Integer propertyId;
+    ProgressDialog progressDialog;
+    NetworkConnection networkConnection;
+    Bundle bundle;
+    //Bitmap bitmap1, bitmap2, bitmap3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +116,33 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                 finish();
             }
         });
+        /*getting property details*/
         Intent i = getIntent();
-        locality = i.getStringExtra("locality");
+         bundle = i.getBundleExtra("bundle");
+        latitude = bundle.getDouble("latitude");
+        longitude = bundle.getDouble("longitude");
+        locality = bundle.getString("locality");
+        subLocality = bundle.getString("subLocality");
+        apartmentType = bundle.getString("apartmentType");
+        apartmentName = bundle.getString("apartmentName");
+        bhk = bundle.getString("bhk");
+        extent = bundle.getString("extent");
+        rent = bundle.getString("rent");
+        floors = bundle.getString("floors");
+        floorNo = bundle.getString("floorNo");
+        tenantType = bundle.getString("tenantType");
+        foodType = bundle.getString("foodType");
+        specialFeatures = bundle.getStringArray("specialFeatures");
+        water = bundle.getString("water");
+        parking = bundle.getString("parking");
+        lift = bundle.getString("lift");
+        contactTime = bundle.getString("contactTime");
+        address = bundle.getString("address");
+        buttonName = bundle.getString("buttonName");
+
+        Log.d("TAG", "uploadPropertyDetailsStatus: " + apartmentType + "\n" + apartmentName + "\n" + bhk + "\n" + extent + "\n" + rent + "\n" + floors + "\n" + floorNo + "\n" +
+                tenantType + "\n" + foodType + "\n" + water + "\n" + parking + "\n" + lift + "\n" +
+                contactTime + "\n" + address + "\n" + locality + "\n" + subLocality + "\n" + Arrays.toString(specialFeatures) + "\n" + latitude + "\n" + longitude);
         //CheckPermissions();
         imagerelativeLayout1 = findViewById(R.id.imagerelativeLayout1);
         image1 = findViewById(R.id.image1);
@@ -114,6 +158,8 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         capture3 = findViewById(R.id.capture3);
         upload = findViewById(R.id.upload);
 
+        networkConnection = new NetworkConnection(this);
+        progressDialog = new ProgressDialog(this, R.style.progressDialogStyle);
         clear1.setOnClickListener(this);
         capture1.setOnClickListener(this);
         clear2.setOnClickListener(this);
@@ -121,24 +167,33 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         clear3.setOnClickListener(this);
         capture3.setOnClickListener(this);
         upload.setOnClickListener(this);
-    }
 
-    /*change statusbar color*/
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public Window statusBarColor() {
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        return window;
+        if(BitmapHelper.getInstance().getBitmap1() != null) {
+            bitmap1 = BitmapHelper.getInstance().getBitmap1();
+            imagerelativeLayout1.setVisibility(View.VISIBLE);
+            capture1.setVisibility(View.GONE);
+            image1.setImageBitmap(bitmap1);
+        }
+        Log.d("TAG", "onCreate: "+BitmapHelper.getInstance().getBitmap2());
+        if(BitmapHelper.getInstance().getBitmap2() != null) {
+            bitmap2 = BitmapHelper.getInstance().getBitmap2();
+            imagerelativeLayout2.setVisibility(View.VISIBLE);
+            capture2.setVisibility(View.GONE);
+            image2.setImageBitmap(bitmap2);
+        }
+        if(BitmapHelper.getInstance().getBitmap3() != null) {
+            bitmap3 = BitmapHelper.getInstance().getBitmap3();
+            imagerelativeLayout3.setVisibility(View.VISIBLE);
+            capture3.setVisibility(View.GONE);
+            image3.setImageBitmap(bitmap3);
+        }
     }
-
     /*toolbar icons initializations and onclick*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_icons, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -191,8 +246,11 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                     } else if (bitmap3 == null) {
                         Toast.makeText(this, "please Select " + capture3.getText().toString(), Toast.LENGTH_LONG).show();
                     } else {
-                        //uploadImage(generatePropertyId(locality.substring(0,3).toUpperCase()));
-                        Toast.makeText(this, "your Property ID: " + generatePropertyId(locality.substring(0, 3).toUpperCase()), Toast.LENGTH_LONG).show();
+                        uploadPropertyDetailsStatus(
+                                Config.getUserId(getApplicationContext()), latitude, longitude, locality, subLocality,
+                                apartmentType, apartmentName, bhk, extent, rent, floors, floorNo, tenantType, foodType,
+                                Arrays.toString(specialFeatures), water, parking, lift, contactTime, address);
+
                     }
                     Log.d("TAG", "uploadonClick: " + bitmap1 + "\n" +
                             bitmap2 + "\n" +
@@ -201,6 +259,86 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                     Log.d("TAG", "uploadonClicke: " + e);
                 }
                 break;
+        }
+    }
+
+    private void uploadPropertyDetailsStatus(String userId, double latitude, double longitude, String locality, String subLocality,
+                                             String apartmentType, String apartmentName, String bhk, String extent, String rent,
+                                             String floors, String floorNo, String tenantType, String foodType, String specialFeatures,
+                                             String water, String parking, String lift, String contactTime, String address
+    ) {
+        if (networkConnection.isConnectingToInternet()) {
+            try {
+                progressDialog.setTitle("Uploading Details");
+                progressDialog.setMessage("Please wait We are Uploading Details...");
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+                String inside = convertToString1();
+                String imageName1 = capture1.getText().toString();
+                String outside = convertToString2();
+                String imageName2 = capture2.getText().toString();
+                String specialArea = convertToString3();
+                String imageName3 = capture3.getText().toString();
+                apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+                Call<AddPropertyResponse> call = null;
+                /*inserting property details*/
+                if(buttonName.equalsIgnoreCase("addProperty")){
+                   call = apiInterface.uploadPropertyDetails(new AddPropertyResponse(userId, 0,latitude, longitude, locality, subLocality,
+                            apartmentType, apartmentName, bhk, extent, rent, floors, floorNo, tenantType, foodType, specialFeatures,
+                            water, parking, lift, contactTime, address, inside, outside, specialArea));
+                }/*updating property details*/
+                else if(buttonName.equalsIgnoreCase("edit")) {
+                        propertyId = bundle.getInt("id");
+                    call = apiInterface.uploadPropertyDetails(new AddPropertyResponse(userId,propertyId, latitude, longitude, locality, subLocality,
+                            apartmentType, apartmentName, bhk, extent, rent, floors, floorNo, tenantType, foodType, specialFeatures,
+                            water, parking, lift, contactTime, address, inside, outside, specialArea));
+                }
+                Log.d("TAG", "uploadPropertyDetailsStatus:7 " +"\n"+ userId+ "\n"+latitude+ "\n"+longitude+"\n"+locality+"\n"+subLocality+"\n"+
+                        apartmentType + "\n" + apartmentName + "\n" + bhk + "\n" + extent + "\n" + rent + "\n" + floors + "\n" + floorNo + "\n" +
+                        tenantType + "\n" + foodType + "\n" + water + "\n" + parking + "\n" + lift + "\n" +specialFeatures+"\n"+
+                        contactTime + "\n" + address /*+ "\n" + inside + "\n" + outside +"\n"+specialArea*/ );
+
+                call.enqueue(new Callback<AddPropertyResponse>() {
+                    @Override
+                    public void onResponse(Call<AddPropertyResponse> call, Response<AddPropertyResponse> response) {
+                        addPropertyResponse = response.body();
+                        try {
+                            Log.d("TAG", "uploadPropertyDetailsStatus:0" + addPropertyResponse.getStatus()+"\n"+
+                                    addPropertyResponse.getUserID());
+                            if (addPropertyResponse.getStatus().equalsIgnoreCase("SUCCESS")) {
+                                progressDialog.cancel();
+                                Toast.makeText(UploadPropertyImages.this, "Successfully Submitted Your Property Details", Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(getApplicationContext(),History.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            } else {
+                                progressDialog.cancel();
+                                Toast.makeText(UploadPropertyImages.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            progressDialog.cancel();
+                            Toast.makeText(UploadPropertyImages.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+                            Log.d("TAG", "uploadPropertyDetailsStatus:1 " + e);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddPropertyResponse> call, Throwable t) {
+                        progressDialog.cancel();
+                        Toast.makeText(UploadPropertyImages.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+                        Log.d("TAG", "uploadPropertyDetailsStatus:2 " + t);
+                    }
+                });
+
+            } catch (Exception e) {
+                if (progressDialog != null) {
+                    progressDialog.cancel();
+                }
+                Toast.makeText(UploadPropertyImages.this, "Please Try Again Later", Toast.LENGTH_LONG).show();
+                Log.d("TAG", "uploadPropertyDetailsStatus:3 " + e);
+            }
+        } else {
+            Toast.makeText(this, R.string.no_net, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -263,11 +401,12 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
     private void TakePicture(int id) {        //to capture image
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            /*  takePictureIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);*/
+              takePictureIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             switch (id) {
                 case 1:
                     File imageFile1 = null;
+                    Log.d("TAG", "TakePicture: "+imageFile1);
                     try {
                         imageFile1 = getImageFile();
                     } catch (IOException e) {
@@ -288,9 +427,9 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                         e.printStackTrace();
                     }
                     if (imageFile2 != null) {
-                        imageUri1 = FileProvider.getUriForFile(this,
-                                "com.example.Tenant.fileprovider", imageFile2);
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri1);
+                        imageUri2 = FileProvider.getUriForFile(this,
+                                "com.example.RentalManagement.fileprovider", imageFile2);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri2);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE2);
                     }
                     break;
@@ -302,9 +441,9 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                         e.printStackTrace();
                     }
                     if (imageFile3 != null) {
-                        imageUri1 = FileProvider.getUriForFile(this,
-                                "com.example.Tenant.fileprovider", imageFile3);
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri1);
+                        imageUri3 = FileProvider.getUriForFile(this,
+                                "com.example.RentalManagement.fileprovider", imageFile3);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri3);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE3);
                     }
                     break;
@@ -332,14 +471,20 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("TAG", "onActivityResult: "+requestCode+"\n"+resultCode+"\n"+data);
         switch (requestCode) {
             case REQUEST_IMAGE_CAPTURE1:
                 try {
-                    imagerelativeLayout1.setVisibility(View.VISIBLE);
-                    capture1.setVisibility(View.GONE);
-                    //bitmap1 = (Bitmap) data.getExtras().get("data");
-                    bitmap1 = BitmapFactory.decodeFile(filePath);
-                    image1.setImageBitmap(bitmap1);
+                    Log.d("TAG", "onActivityResult: "+resultCode);
+                    if (resultCode == -1 ) {
+                        bitmap1 = BitmapFactory.decodeFile(filePath);
+                        imagerelativeLayout1.setVisibility(View.VISIBLE);
+                        capture1.setVisibility(View.GONE);
+                        image1.setImageBitmap(bitmap1);
+                    } else {
+                            imagerelativeLayout1.setVisibility(View.GONE);
+                            capture1.setVisibility(View.VISIBLE);
+                    }
                     break;
                 } catch (Exception e) {
 
@@ -357,11 +502,15 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                 break;
             case REQUEST_IMAGE_CAPTURE2:
                 try {
-                    imagerelativeLayout2.setVisibility(View.VISIBLE);
-                    capture2.setVisibility(View.GONE);
-                    // bitmap2 = (Bitmap) data.getExtras().get("data");
-                    bitmap2 = BitmapFactory.decodeFile(filePath);
-                    image2.setImageBitmap(bitmap2);
+                    if (resultCode == -1) {
+                        bitmap2 = BitmapFactory.decodeFile(filePath);
+                        imagerelativeLayout2.setVisibility(View.VISIBLE);
+                        capture2.setVisibility(View.GONE);
+                        image2.setImageBitmap(bitmap2);
+                    } else {
+                        imagerelativeLayout2.setVisibility(View.GONE);
+                        capture2.setVisibility(View.VISIBLE);
+                    }
                     break;
                 } catch (Exception e) {
 
@@ -379,11 +528,15 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                 break;
             case REQUEST_IMAGE_CAPTURE3:
                 try {
-                    imagerelativeLayout3.setVisibility(View.VISIBLE);
-                    capture3.setVisibility(View.GONE);
-                    //  bitmap3 = (Bitmap) data.getExtras().get("data");
-                    bitmap3 = BitmapFactory.decodeFile(filePath);
-                    image3.setImageBitmap(bitmap3);
+                    if (resultCode == -1) {
+                        bitmap3 = BitmapFactory.decodeFile(filePath);
+                        imagerelativeLayout3.setVisibility(View.VISIBLE);
+                        capture3.setVisibility(View.GONE);
+                        image3.setImageBitmap(bitmap3);
+                    } else {
+                        imagerelativeLayout3.setVisibility(View.GONE);
+                        capture3.setVisibility(View.VISIBLE);
+                    }
                     break;
                 } catch (Exception e) {
 
@@ -422,33 +575,6 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         bitmap3.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
-    private void uploadImage(String propertyId) {
-        String image1 = convertToString1();
-        String imageName1 = capture1.getText().toString();
-        String image2 = convertToString2();
-        String imageName2 = capture2.getText().toString();
-        String image3 = convertToString3();
-        String imageName3 = capture3.getText().toString();
-        apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-        Call<AddPropertyResponse> call = apiInterface.uploadImage(new AddPropertyResponse(image1, imageName1, image2, imageName2,
-                image3, imageName3, propertyId));
-        call.enqueue(new Callback<AddPropertyResponse>() {
-            @Override
-            public void onResponse(Call<AddPropertyResponse> call, Response<AddPropertyResponse> response) {
-                addPropertyResponse = response.body();
-                if (addPropertyResponse.getStatus().equals("OK")) {
-                    Log.d("TAG", "Server Response" + "success");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AddPropertyResponse> call, Throwable t) {
-                Log.d("TAG", "Server Response" + t.toString());
-            }
-        });
-
     }
 
     /*checking camera permissions*/
@@ -499,4 +625,12 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         }
     }
 
+    /*change statusbar color*/
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public Window statusBarColor() {
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        return window;
+    }
 }

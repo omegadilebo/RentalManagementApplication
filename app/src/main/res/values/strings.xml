@@ -83,8 +83,15 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="edit">Edit</string>
     <string name="search">Search</string>
-    <string name="dummyy_address">4BHK, 500 sq. ft.\n19-31, girinagar,Idpl Colony,Quthubullapur,Medchal,Telangana,500037</string>
-
+    <string name="dummyy_address">Rent:50000, BHK:4BHK, 500 Sq.ft.\n19-31, girinagar,Idpl Colony,Quthubullapur,Medchal,Telangana,500037</string>
+    <string name="enter_registered_number">Enter Registered Number</string>
+    <string name="apartment_name">Apartment Name:</string>
+    <string name="enter_apartment_name">Enter Apartment Name</string>
+    <string name="no_net">Please Check Your Internet Connection</string>
+    <string name="try_again">Please Try Again Later</string>
+    <string name="image_2">Image 2:-</string>
+    <string name="image_3">Image 3:-</string>
+    <string name="image_1">Image 1:-</string>
     <string-array name="occupation">
         <item>Salaried</item>
         <item>SelfEmployeed</item>
@@ -119,5 +126,11 @@
         <item>Car</item>
         <item>Both</item>
         <item>Not Avaliable</item>
+    </string-array>
+
+    <!--sort list-->
+    <string-array name="sort">
+        <item>Price — Low to High</item>
+        <item>Price — High to Low</item>
     </string-array>
 </resources>

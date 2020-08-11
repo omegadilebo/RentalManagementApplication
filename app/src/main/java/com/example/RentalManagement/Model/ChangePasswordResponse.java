@@ -2,7 +2,7 @@ package com.example.RentalManagement.Model;
 
 public class ChangePasswordResponse {
     String MobileNo;
-    String Password;
+    String NewPassword;
 
     public String getStatus() {
         return Status;
@@ -12,6 +12,6 @@ public class ChangePasswordResponse {
 
     public ChangePasswordResponse(String mobileNo, String password) {
         this.MobileNo = mobileNo;
-        this.Password = password;
+        this.NewPassword = password;
     }
 }

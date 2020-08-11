@@ -21,7 +21,7 @@ public class OccupationList extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         final String[] occupationList = this.getResources().getStringArray(R.array.occupation);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
         builder.setTitle("Select Occupation");
         builder.setCancelable(false);
         builder.setItems(occupationList, new DialogInterface.OnClickListener() {

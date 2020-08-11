@@ -21,7 +21,7 @@ public class BhkType extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         final String[] bhk = this.getResources().getStringArray(R.array.selectBHK);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
         builder.setTitle("Select BHK");
         builder.setItems(bhk, new DialogInterface.OnClickListener() {
             @Override
