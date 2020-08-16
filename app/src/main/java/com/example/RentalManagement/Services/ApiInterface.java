@@ -5,25 +5,16 @@ import com.example.RentalManagement.Model.ChangePasswordResponse;
 import com.example.RentalManagement.Model.ForgotPasswordResponse;
 import com.example.RentalManagement.Model.LoginResponse;
 import com.example.RentalManagement.Model.RegistrationResponse;
-import com.example.RentalManagement.Owner.Model.AddPropertyResponse;
-import com.example.RentalManagement.Owner.Model.HistoryResponse;
-import com.example.RentalManagement.Tenant.Model.SearchPropertyResponse;
+import com.example.RentalManagement.Owner.Residential.Models.AddPropertyResponse;
+import com.example.RentalManagement.Owner.Residential.Models.HistoryResponse;
+import com.example.RentalManagement.Tenant.Models.SearchPropertyResponse;
 
-import java.util.List;
-
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -69,15 +60,27 @@ public interface ApiInterface {
             @Body ChangePasswordResponse changePasswordResponse
     );
 
-    /*get data to edit propertydetails by owner*/
+    /*get history of owner*/
+    @Headers("Content-Type:application/json")
+    @GET(" Property/GetAllPropertiesByUserid/{id}")
+    Call<HistoryResponse> getHistory(
+            @Path("id") int id /*here id means user id*/
+    );
+
+    /*get proprertyId data for updating propertydetails by owner*/
     @Headers("Content-Type:application/json")
     @GET("Property/{id}")
-    Call<AddPropertyResponse> getHistory(
+    Call<AddPropertyResponse> getPropertyIdData(
             @Path("id") int id
     );
-    /*Call<List<HistoryResponse>> getHistory(
-            @Body HistoryResponse historyResponse
-    );*/
+
+    /*update property details*/
+    @Headers("Content-Type:application/json")
+    @POST("Property/PropertyUpdate")
+    Call<AddPropertyResponse> updatePropertyDetails(
+            @Body AddPropertyResponse addPropertyResponse
+    );
+
 
     /*search property for tenants*/
     @Headers("Content-Type:application/json")
@@ -85,5 +88,9 @@ public interface ApiInterface {
             @Body SearchPropertyResponse searchPropertyResponse
     );
 
-
+    /*uploading commercial property detials*/
+    @Headers("Content-Type:application/json")
+    Call<AddPropertyResponse> uploadCommercialPropertyDetails(
+            @Body AddPropertyResponse addPropertyResponse
+    );
 }

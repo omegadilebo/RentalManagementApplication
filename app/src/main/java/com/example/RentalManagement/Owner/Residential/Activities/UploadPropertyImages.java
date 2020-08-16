@@ -4,7 +4,7 @@
  * Created By : Mahesh
  * Developers Involved : Mahesh
  */
-package com.example.RentalManagement.Owner;
+package com.example.RentalManagement.Owner.Residential.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -38,22 +38,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
-
-import com.example.RentalManagement.Activities.RegisterActivity;
 import com.example.RentalManagement.Dialogs.LogOut;
-import com.example.RentalManagement.Owner.Model.AddPropertyResponse;
+import com.example.RentalManagement.Owner.Residential.Models.AddPropertyResponse;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
 import com.example.RentalManagement.Services.NetworkConnection;
 import com.example.RentalManagement.utils.BitmapHelper;
 import com.example.RentalManagement.utils.Config;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.Reference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,12 +82,12 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
             Manifest.permission.CAMERA
     };
     Uri imageUri1, imageUri2, imageUri3;
-    String filePath,buttonName;
+    String filePath, buttonName;
 
     double latitude, longitude;
-    String apartmentType, apartmentName, bhk, extent, rent, floors, floorNo,
+    String propertyType, apartmentType, apartmentName, bhk, extent, rent, roomNo, floorNo,
             tenantType, foodType, water, parking, lift,
-            contactTime, address;
+            contactTime, address, floors, deposit, lease;
     String[] specialFeatures;
     String locality, subLocality;
     Integer propertyId;
@@ -118,29 +114,39 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         });
         /*getting property details*/
         Intent i = getIntent();
-         bundle = i.getBundleExtra("bundle");
+        bundle = i.getBundleExtra("bundle");
+        buttonName = bundle.getString("buttonName");
         latitude = bundle.getDouble("latitude");
         longitude = bundle.getDouble("longitude");
         locality = bundle.getString("locality");
         subLocality = bundle.getString("subLocality");
-        apartmentType = bundle.getString("apartmentType");
-        apartmentName = bundle.getString("apartmentName");
-        bhk = bundle.getString("bhk");
         extent = bundle.getString("extent");
-        rent = bundle.getString("rent");
-        floors = bundle.getString("floors");
         floorNo = bundle.getString("floorNo");
-        tenantType = bundle.getString("tenantType");
-        foodType = bundle.getString("foodType");
         specialFeatures = bundle.getStringArray("specialFeatures");
-        water = bundle.getString("water");
-        parking = bundle.getString("parking");
-        lift = bundle.getString("lift");
+        rent = bundle.getString("rent");
         contactTime = bundle.getString("contactTime");
         address = bundle.getString("address");
-        buttonName = bundle.getString("buttonName");
+        if (buttonName.equalsIgnoreCase("addProperty") |
+                buttonName.equalsIgnoreCase("edit")) {
 
-        Log.d("TAG", "uploadPropertyDetailsStatus: " + apartmentType + "\n" + apartmentName + "\n" + bhk + "\n" + extent + "\n" + rent + "\n" + floors + "\n" + floorNo + "\n" +
+            apartmentType = bundle.getString("apartmentType");
+            apartmentName = bundle.getString("apartmentName");
+            bhk = bundle.getString("bhk");
+            roomNo = bundle.getString("roomNo");
+            tenantType = bundle.getString("tenantType");
+            foodType = bundle.getString("foodType");
+            water = bundle.getString("water");
+            parking = bundle.getString("parking");
+            lift = bundle.getString("lift");
+
+        } else if (buttonName.equalsIgnoreCase("commercialAddProperty")) {
+            propertyType = bundle.getString("property");
+            floors = bundle.getString("noOfFloors");
+            deposit = bundle.getString("deposit");
+            lease = bundle.getString("lease");
+        }
+
+        Log.d("TAG", "uploadPropertyDetailsStatus: " + apartmentType + "\n" + apartmentName + "\n" + bhk + "\n" + extent + "\n" + rent + "\n" + roomNo + "\n" + floorNo + "\n" +
                 tenantType + "\n" + foodType + "\n" + water + "\n" + parking + "\n" + lift + "\n" +
                 contactTime + "\n" + address + "\n" + locality + "\n" + subLocality + "\n" + Arrays.toString(specialFeatures) + "\n" + latitude + "\n" + longitude);
         //CheckPermissions();
@@ -168,32 +174,34 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         capture3.setOnClickListener(this);
         upload.setOnClickListener(this);
 
-        if(BitmapHelper.getInstance().getBitmap1() != null) {
+        if (BitmapHelper.getInstance().getBitmap1() != null) {
             bitmap1 = BitmapHelper.getInstance().getBitmap1();
             imagerelativeLayout1.setVisibility(View.VISIBLE);
             capture1.setVisibility(View.GONE);
             image1.setImageBitmap(bitmap1);
         }
-        Log.d("TAG", "onCreate: "+BitmapHelper.getInstance().getBitmap2());
-        if(BitmapHelper.getInstance().getBitmap2() != null) {
+        Log.d("TAG", "onCreate: " + BitmapHelper.getInstance().getBitmap2());
+        if (BitmapHelper.getInstance().getBitmap2() != null) {
             bitmap2 = BitmapHelper.getInstance().getBitmap2();
             imagerelativeLayout2.setVisibility(View.VISIBLE);
             capture2.setVisibility(View.GONE);
             image2.setImageBitmap(bitmap2);
         }
-        if(BitmapHelper.getInstance().getBitmap3() != null) {
+        if (BitmapHelper.getInstance().getBitmap3() != null) {
             bitmap3 = BitmapHelper.getInstance().getBitmap3();
             imagerelativeLayout3.setVisibility(View.VISIBLE);
             capture3.setVisibility(View.GONE);
             image3.setImageBitmap(bitmap3);
         }
     }
+
     /*toolbar icons initializations and onclick*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_icons, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -248,7 +256,7 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                     } else {
                         uploadPropertyDetailsStatus(
                                 Config.getUserId(getApplicationContext()), latitude, longitude, locality, subLocality,
-                                apartmentType, apartmentName, bhk, extent, rent, floors, floorNo, tenantType, foodType,
+                                apartmentType, apartmentName, bhk, extent, rent, roomNo, floorNo, tenantType, foodType,
                                 Arrays.toString(specialFeatures), water, parking, lift, contactTime, address);
 
                     }
@@ -264,7 +272,7 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
 
     private void uploadPropertyDetailsStatus(String userId, double latitude, double longitude, String locality, String subLocality,
                                              String apartmentType, String apartmentName, String bhk, String extent, String rent,
-                                             String floors, String floorNo, String tenantType, String foodType, String specialFeatures,
+                                             String roomNo, String floorNo, String tenantType, String foodType, String specialFeatures,
                                              String water, String parking, String lift, String contactTime, String address
     ) {
         if (networkConnection.isConnectingToInternet()) {
@@ -282,33 +290,35 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                 apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
                 Call<AddPropertyResponse> call = null;
                 /*inserting property details*/
-                if(buttonName.equalsIgnoreCase("addProperty")){
-                   call = apiInterface.uploadPropertyDetails(new AddPropertyResponse(userId, 0,latitude, longitude, locality, subLocality,
-                            apartmentType, apartmentName, bhk, extent, rent, floors, floorNo, tenantType, foodType, specialFeatures,
+                if (buttonName.equalsIgnoreCase("addProperty")) {
+                    call = apiInterface.uploadPropertyDetails(new AddPropertyResponse(userId, 0, latitude, longitude, locality, subLocality,
+                            apartmentType, apartmentName, bhk, extent, rent, roomNo, floorNo, tenantType, foodType, specialFeatures,
                             water, parking, lift, contactTime, address, inside, outside, specialArea));
-                }/*updating property details*/
-                else if(buttonName.equalsIgnoreCase("edit")) {
-                        propertyId = bundle.getInt("id");
-                    call = apiInterface.uploadPropertyDetails(new AddPropertyResponse(userId,propertyId, latitude, longitude, locality, subLocality,
-                            apartmentType, apartmentName, bhk, extent, rent, floors, floorNo, tenantType, foodType, specialFeatures,
+                }/*updating property details*/ else if (buttonName.equalsIgnoreCase("edit")) {
+                    propertyId = bundle.getInt("id");
+                    call = apiInterface.updatePropertyDetails(new AddPropertyResponse(userId, propertyId, latitude, longitude, locality, subLocality,
+                            apartmentType, apartmentName, bhk, extent, rent, roomNo, floorNo, tenantType, foodType, specialFeatures,
                             water, parking, lift, contactTime, address, inside, outside, specialArea));
+                } else if (buttonName.equalsIgnoreCase("commercialAddProperty")) { /*adding new commercial property*/
+                    call = apiInterface.uploadCommercialPropertyDetails(new AddPropertyResponse(userId, 0, "commercial", latitude, longitude, locality, subLocality,
+                            propertyType, extent, floors, floorNo, specialFeatures, rent, deposit, lease, contactTime, address, inside, outside, specialArea));
                 }
-                Log.d("TAG", "uploadPropertyDetailsStatus:7 " +"\n"+ userId+ "\n"+latitude+ "\n"+longitude+"\n"+locality+"\n"+subLocality+"\n"+
-                        apartmentType + "\n" + apartmentName + "\n" + bhk + "\n" + extent + "\n" + rent + "\n" + floors + "\n" + floorNo + "\n" +
-                        tenantType + "\n" + foodType + "\n" + water + "\n" + parking + "\n" + lift + "\n" +specialFeatures+"\n"+
-                        contactTime + "\n" + address /*+ "\n" + inside + "\n" + outside +"\n"+specialArea*/ );
+                Log.d("TAG", "uploadPropertyDetailsStatus:7 " + "\n" + userId + "\n" + latitude + "\n" + longitude + "\n" + locality + "\n" + subLocality + "\n" +
+                        apartmentType + "\n" + apartmentName + "\n" + bhk + "\n" + extent + "\n" + rent + "\n" + roomNo + "\n" + floorNo + "\n" +
+                        tenantType + "\n" + foodType + "\n" + water + "\n" + parking + "\n" + lift + "\n" + specialFeatures + "\n" +
+                        contactTime + "\n" + address /*+ "\n" + inside + "\n" + outside +"\n"+specialArea*/);
 
                 call.enqueue(new Callback<AddPropertyResponse>() {
                     @Override
                     public void onResponse(Call<AddPropertyResponse> call, Response<AddPropertyResponse> response) {
                         addPropertyResponse = response.body();
                         try {
-                            Log.d("TAG", "uploadPropertyDetailsStatus:0" + addPropertyResponse.getStatus()+"\n"+
+                            Log.d("TAG", "uploadPropertyDetailsStatus:0" + addPropertyResponse.getStatus() + "\n" +
                                     addPropertyResponse.getUserID());
                             if (addPropertyResponse.getStatus().equalsIgnoreCase("SUCCESS")) {
                                 progressDialog.cancel();
                                 Toast.makeText(UploadPropertyImages.this, "Successfully Submitted Your Property Details", Toast.LENGTH_LONG).show();
-                                Intent i = new Intent(getApplicationContext(),History.class);
+                                Intent i = new Intent(getApplicationContext(), History.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
                             } else {
@@ -401,12 +411,12 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
     private void TakePicture(int id) {        //to capture image
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-              takePictureIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            takePictureIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             switch (id) {
                 case 1:
                     File imageFile1 = null;
-                    Log.d("TAG", "TakePicture: "+imageFile1);
+                    Log.d("TAG", "TakePicture: " + imageFile1);
                     try {
                         imageFile1 = getImageFile();
                     } catch (IOException e) {
@@ -471,19 +481,19 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TAG", "onActivityResult: "+requestCode+"\n"+resultCode+"\n"+data);
+        Log.d("TAG", "onActivityResult: " + requestCode + "\n" + resultCode + "\n" + data);
         switch (requestCode) {
             case REQUEST_IMAGE_CAPTURE1:
                 try {
-                    Log.d("TAG", "onActivityResult: "+resultCode);
-                    if (resultCode == -1 ) {
+                    Log.d("TAG", "onActivityResult: " + resultCode);
+                    if (resultCode == -1) {
                         bitmap1 = BitmapFactory.decodeFile(filePath);
                         imagerelativeLayout1.setVisibility(View.VISIBLE);
                         capture1.setVisibility(View.GONE);
                         image1.setImageBitmap(bitmap1);
                     } else {
-                            imagerelativeLayout1.setVisibility(View.GONE);
-                            capture1.setVisibility(View.VISIBLE);
+                        imagerelativeLayout1.setVisibility(View.GONE);
+                        capture1.setVisibility(View.VISIBLE);
                     }
                     break;
                 } catch (Exception e) {

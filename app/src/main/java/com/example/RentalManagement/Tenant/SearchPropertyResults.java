@@ -24,17 +24,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.RentalManagement.Dialogs.ApartmentType;
 import com.example.RentalManagement.Dialogs.SortDialog;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
 import com.example.RentalManagement.Services.NetworkConnection;
 import com.example.RentalManagement.Tenant.Adapters.SearchPropertyResultsAdapter;
-import com.example.RentalManagement.Tenant.Model.SearchPropertyResponse;
-
-import java.util.Collections;
-import java.util.Comparator;
+import com.example.RentalManagement.Tenant.Models.SearchPropertyResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

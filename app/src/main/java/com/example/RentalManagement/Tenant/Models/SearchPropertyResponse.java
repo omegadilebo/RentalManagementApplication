@@ -1,4 +1,4 @@
-package com.example.RentalManagement.Tenant.Model;
+package com.example.RentalManagement.Tenant.Models;
 
 public class SearchPropertyResponse {
 String category;

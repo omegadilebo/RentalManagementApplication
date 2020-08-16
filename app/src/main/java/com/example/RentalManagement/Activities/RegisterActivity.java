@@ -42,7 +42,6 @@ import androidx.core.app.ActivityCompat;
 import com.example.RentalManagement.BuildConfig;
 import com.example.RentalManagement.Dialogs.OccupationList;
 import com.example.RentalManagement.Model.RegistrationResponse;
-import com.example.RentalManagement.Owner.AddProperty;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;

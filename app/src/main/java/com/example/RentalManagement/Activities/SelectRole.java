@@ -26,8 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.RentalManagement.Dialogs.LogOut;
-import com.example.RentalManagement.Owner.AddProperty;
-import com.example.RentalManagement.Owner.History;
+import com.example.RentalManagement.Owner.Commercial.Activities.CommercialAddProperty;
+import com.example.RentalManagement.Owner.Residential.Activities.History;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Tenant.SearchProperty;
 
@@ -102,9 +102,13 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
                         case "Property Owner":
                             if (propertyType == "") {
                                 Toast.makeText(this, "Select Property Type", Toast.LENGTH_SHORT).show();
-                            } else {
+                            } else if (propertyType.equalsIgnoreCase("Residential")) {
                                 Intent i = new Intent(this, History.class);
-                              //  Intent i = new Intent(this, AddProperty.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(i);
+                            } else if (propertyType.equalsIgnoreCase("Commercial")) {
+                                Intent i = new Intent(this, CommercialAddProperty.class);
+                                //  Intent i = new Intent(this, AddProperty.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
                             }
@@ -113,12 +117,12 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
                             Log.d("TAG", "onClick: " + propertyType);
                             if (propertyType == "") {
                                 Toast.makeText(this, "Select Property Type", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (propertyType.equalsIgnoreCase("Residential")) {
-                                    Intent i = new Intent(this, SearchProperty.class);
-                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(i);
-                                }
+                            } else if (propertyType.equalsIgnoreCase("Residential")) {
+                                Intent i = new Intent(this, SearchProperty.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(i);
+                            } else if (propertyType.equalsIgnoreCase("Commercial")) {
+                                /*if tenant click on commercial*/
                             }
                             break;
                     }

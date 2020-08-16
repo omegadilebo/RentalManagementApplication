@@ -1,4 +1,4 @@
-package com.example.RentalManagement.Owner.Model;
+package com.example.RentalManagement.Owner.Residential.Models;
 
 
 public class AddPropertyResponse {
@@ -13,7 +13,7 @@ public class AddPropertyResponse {
     String BHK;
     String Sft;
     String Rent;
-    String RoomNo;//no of floors
+    String RoomNo;
     String FloorNo;
     String TenantType;
     String FoodType;
@@ -28,6 +28,35 @@ public class AddPropertyResponse {
     String Image2;
     String Image3;
 
+    String addType, propertyType, floors, deposit, lease;
+
+    /*to add new commercial property*/
+    public AddPropertyResponse(String userId, int propertyId, String commercial, double latitude, double longitude, String locality, String subLocality,
+                               String propertyType, String extent, String floors, String floorNo, String specialFeatures,
+                               String rent, String deposit, String lease, String contactTime, String address,
+                               String inside, String outside, String specialArea) {
+        this.PostBy = userId;
+        this.PropertyId = propertyId;
+        this.addType = commercial;
+        this.Latitude = String.valueOf(latitude);
+        this.Longitude = String.valueOf(longitude);
+        this.Locality = locality;
+        this.Location = subLocality;
+        this.propertyType = propertyType;
+        this.Sft = extent;
+        this.floors = floors;
+        this.FloorNo = floorNo;
+        this.SplFeatures = specialFeatures;
+        this.Rent = rent;
+        this.deposit = deposit;
+        this.lease = lease;
+        this.ContactTime = contactTime;
+        this.Address = address;
+        this.Image1 = inside;
+        this.Image2 = outside;
+        this.Image3 = specialArea;
+    }
+
     public String getUserID() {
         return UserID;
     }
@@ -41,12 +70,12 @@ public class AddPropertyResponse {
     String Status;
 
     /*for interting and  updating property details
-    * if propertyId == 0 (inserting) else (updating)
-    * */
-    public AddPropertyResponse(String userId, Integer propertyId, double latitude, double longitude,
+     * if propertyId == 0 (inserting) else (updating)
+     * */
+    public AddPropertyResponse(String userId, int propertyId, double latitude, double longitude,
                                String locality, String subLocality, String apartmentType,
                                String apartmentName, String bhk, String extent, String rent,
-                               String floors, String floorNo, String tenantType, String foodType,
+                               String roomNo, String floorNo, String tenantType, String foodType,
                                String specialFeatures, String water, String parking, String lift,
                                String contactTime, String address, String inside, String outside,
                                String specialArea) {
@@ -61,7 +90,7 @@ public class AddPropertyResponse {
         this.BHK = bhk;
         this.Sft = extent;
         this.Rent = rent;
-        this.RoomNo = floors;//no of floors
+        this.RoomNo = roomNo;
         this.FloorNo = floorNo;
         this.TenantType = tenantType;
         this.FoodType = foodType;

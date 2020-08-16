@@ -92,6 +92,9 @@
     <string name="image_2">Image 2:-</string>
     <string name="image_3">Image 3:-</string>
     <string name="image_1">Image 1:-</string>
+    <string name="remove_property">Remove Property!!</string>
+    <string name="do_you_want_to_remove">Do You Want to Remove?</string>
+    <string name="no">No</string>
     <string-array name="occupation">
         <item>Salaried</item>
         <item>SelfEmployeed</item>
@@ -132,5 +135,19 @@
     <string-array name="sort">
         <item>Price — Low to High</item>
         <item>Price — High to Low</item>
+    </string-array>
+    <!--commercial property Type-->
+    <string-array name="commercialPropertyType">
+        <item>Office</item>
+        <item>Shop</item>
+        <item>Showroom</item>
+        <item>Godown</item>
+        <item>Industrial Building</item>
+    </string-array>
+    <string-array name="commercialPropertyFeatures">
+        <item>Furnished</item>
+        <item>Semi Furnished</item>
+        <item>Main Road</item>
+        <item>Corner Property</item>
     </string-array>
 </resources>

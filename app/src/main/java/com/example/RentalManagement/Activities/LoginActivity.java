@@ -33,7 +33,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.RentalManagement.BuildConfig;
 import com.example.RentalManagement.Model.LoginResponse;
-import com.example.RentalManagement.Owner.AddProperty;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
@@ -45,12 +44,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     /*declarations*/

@@ -13,7 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.RentalManagement.Owner.AddProperty;
+import com.example.RentalManagement.Owner.Commercial.Activities.CommercialAddProperty;
+import com.example.RentalManagement.Owner.Residential.Activities.AddProperty;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Tenant.SearchProperty;
 
@@ -28,6 +29,7 @@ public class LocationSuggestionsAdapter extends
     Context context;
     AddProperty addProperty;
     SearchProperty searchProperty;
+    CommercialAddProperty commercialAddProperty;
     String classname;
     public LocationSuggestionsAdapter(ArrayList<String> data, ArrayList<String> data1, AddProperty addProperty,
                                       Context applicationContext, String classname) {
@@ -45,6 +47,17 @@ public class LocationSuggestionsAdapter extends
         this.searchProperty=searchProperty;
         this.classname = classname;
     }
+
+    public LocationSuggestionsAdapter(ArrayList<String> data, ArrayList<String> data1,
+                                      CommercialAddProperty commercialAddProperty, Context applicationContext,
+                                      String classname) {
+        this.context=applicationContext;        //initializing variables
+        this.data = data;
+        this.data1 = data1;
+        this.commercialAddProperty=commercialAddProperty;
+        this.classname = classname;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull final LocationSuggestionsAdapter.EMSHolder holder, final int position) {
         setScaleAnimation(holder.itemView);
@@ -61,6 +74,13 @@ public class LocationSuggestionsAdapter extends
                     searchProperty.getLocation(selectedLocation);
                 }else if(classname.equalsIgnoreCase("addProperty")){
                     addProperty.getLocation(selectedLocation);
+                }else if(classname.equalsIgnoreCase("CommercialAddProperty")){
+                    try {
+                        commercialAddProperty.getLocation(selectedLocation);
+                    }catch (Exception e){
+                        Log.d("TAG", "onClick: "+e);
+                    }
+
                 }
             }
         });

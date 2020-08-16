@@ -4,7 +4,7 @@
  * Created By : Mahesh
  * Developers Involved : Mahesh
  */
-package com.example.RentalManagement.Owner;
+package com.example.RentalManagement.Owner.Residential.Activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -51,20 +51,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.RentalManagement.Adapters.LocationSuggestionsAdapter;
-import com.example.RentalManagement.BuildConfig;
 import com.example.RentalManagement.Dialogs.ApartmentType;
 import com.example.RentalManagement.Dialogs.BhkType;
 import com.example.RentalManagement.Dialogs.Features;
 import com.example.RentalManagement.Dialogs.LogOut;
 import com.example.RentalManagement.Dialogs.Parking;
 import com.example.RentalManagement.Dialogs.TenantType;
-import com.example.RentalManagement.Owner.Model.AddPropertyResponse;
+import com.example.RentalManagement.Owner.Residential.Models.AddPropertyResponse;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;
 import com.example.RentalManagement.Services.NetworkConnection;
 import com.example.RentalManagement.utils.BitmapHelper;
-import com.example.RentalManagement.utils.Config;
+import com.google.android.datatransport.runtime.BuildConfig;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -79,7 +78,6 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,7 +99,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     /*declarations*/
     Toolbar toolbar;
     AutoCompleteTextView enterLocation;
-    EditText enterApartmentName, enterSize, enterRent, enterFloor, enterFloors, enterAddress;
+    EditText enterApartmentName, enterSize, enterRent, enterFloor, enterRoomNo, enterAddress;
     RelativeLayout recylerLayout;
     TextView apartmentType, selectBHK, tenantType, features, parkingFacility, save;
     ImageView currentLocation, clear, powered;
@@ -121,7 +119,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     ProgressDialog progressDialog;
     AddPropertyResponse addPropertyResponse;
     NetworkConnection networkConnection;
-    String enteredLocation, apartment, apartmentName, bhk, extent, rent, floorNo, floors,
+    String enteredLocation, apartment, apartmentName, bhk, extent, rent, floorNo, roomNo,
             tenants, food, specialFeatures, water, parking, lift,
             contactTime, address;
     String[] seperated;
@@ -168,7 +166,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         enterSize = findViewById(R.id.size);
         enterRent = findViewById(R.id.rent);
         enterFloor = findViewById(R.id.floor);
-        enterFloors = findViewById(R.id.floors);
+        enterRoomNo = findViewById(R.id.roomNo);
         tenantType = findViewById(R.id.tenantType);
         foodRadioGroup = findViewById(R.id.foodRadioGroup);
         foodRadioGroup.clearCheck();
@@ -593,7 +591,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         extent = enterSize.getText().toString();
         rent = enterRent.getText().toString();
         floorNo = enterFloor.getText().toString();
-        floors = enterFloors.getText().toString();
+        roomNo = enterRoomNo.getText().toString();
         tenants = tenantType.getText().toString();
         specialFeatures = features.getText().toString();
         parking = parkingFacility.getText().toString();
@@ -635,9 +633,6 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
             lift = liftRadioButton.getText().toString();
             contactTime = contactRadioButton.getText().toString();
             locationLatLng(enteredLocation);
-            if (Integer.parseInt(floors) < Integer.parseInt(floorNo)) {
-                Toast.makeText(this, "floor Number should be lessthan or equal to number of floors", Toast.LENGTH_LONG).show();
-            } else {
                /* submitDetails(enteredLocation, latitude, longitude, apartment, apartmentName, bhk, extent, rent, floorNo, floors,
                         tenants, food, seperated, water, parking, lift,
                         contactTime, address);*/
@@ -653,7 +648,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 bundle.putString("bhk", bhk);
                 bundle.putString("extent", extent);
                 bundle.putString("rent", rent);
-                bundle.putString("floors", floors);
+                bundle.putString("roomNo", roomNo);
                 bundle.putString("floorNo", floorNo);
                 bundle.putString("tenantType", tenants);
                 bundle.putString("foodType", food);
@@ -667,7 +662,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 bundle.putInt("id",id);
                 i.putExtra("bundle", bundle);
                 startActivity(i);
-            }
+
         }
     }
 
@@ -683,7 +678,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                 progressDialog.setCancelable(true);
                 progressDialog.show();
                 apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-                Call<AddPropertyResponse> call = apiInterface.getHistory(id);
+                Call<AddPropertyResponse> call = apiInterface.getPropertyIdData(id);
                 call.enqueue(new Callback<AddPropertyResponse>() {
                     @Override
                     public void onResponse(Call<AddPropertyResponse> call, Response<AddPropertyResponse> response) {
@@ -712,7 +707,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                             selectBHK.setText(addPropertyResponse.getBHK());
                             enterSize.setText(addPropertyResponse.getSft());
                             enterRent.setText(addPropertyResponse.getRent());
-                            enterFloors.setText(addPropertyResponse.getRoomNo());
+                            enterRoomNo.setText(addPropertyResponse.getRoomNo());
                             enterFloor.setText(addPropertyResponse.getFloorNo());
                             tenantType.setText(addPropertyResponse.getTenantType());
                             switch (addPropertyResponse.getFoodType()) {
