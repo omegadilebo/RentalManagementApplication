@@ -42,12 +42,10 @@ import android.widget.Toast;
 import com.example.RentalManagement.Adapters.LocationSuggestionsAdapter;
 import com.example.RentalManagement.Dialogs.CommercialPropertyFeatures;
 import com.example.RentalManagement.Dialogs.CommercialPropertyType;
-import com.example.RentalManagement.Owner.Residential.Activities.AddProperty;
-import com.example.RentalManagement.Owner.Residential.Activities.UploadPropertyImages;
+import com.example.RentalManagement.Owner.UploadPropertyImages;
 import com.example.RentalManagement.R;
 import com.google.android.datatransport.runtime.BuildConfig;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -97,7 +95,7 @@ public class CommercialAddProperty extends AppCompatActivity implements
     String[] seperated;
     RadioGroup contactRadioGroup;
     RadioButton contactRadioButton, timeRadio, anyTimeRadio;
-
+    String buttonName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +141,14 @@ public class CommercialAddProperty extends AppCompatActivity implements
         address = findViewById(R.id.address);
         save = findViewById(R.id.save);
 
+        /*getting data from previous activity to know which button has clicked*/
+        Intent i = getIntent();
+        buttonName = i.getStringExtra("buttonName");
+        if(buttonName.equalsIgnoreCase("addProperty")){
+
+        }else if(buttonName.equalsIgnoreCase("edit")) {
+
+        }
         currentLocation.setOnClickListener(this);
         clear.setOnClickListener(this);
         propertyType.setOnClickListener(this);

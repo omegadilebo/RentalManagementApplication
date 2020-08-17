@@ -4,7 +4,7 @@
  * Created By : Mahesh
  * Developers Involved : Mahesh
  */
-package com.example.RentalManagement.Owner.Residential.Activities;
+package com.example.RentalManagement.Owner;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -39,6 +39,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.RentalManagement.Dialogs.LogOut;
+import com.example.RentalManagement.Owner.Residential.Activities.History;
 import com.example.RentalManagement.Owner.Residential.Models.AddPropertyResponse;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
@@ -144,6 +145,8 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
             floors = bundle.getString("noOfFloors");
             deposit = bundle.getString("deposit");
             lease = bundle.getString("lease");
+        } else if (buttonName.equalsIgnoreCase("PropertyManagement")) {
+            Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
         }
 
         Log.d("TAG", "uploadPropertyDetailsStatus: " + apartmentType + "\n" + apartmentName + "\n" + bhk + "\n" + extent + "\n" + rent + "\n" + roomNo + "\n" + floorNo + "\n" +

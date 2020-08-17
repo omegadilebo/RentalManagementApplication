@@ -105,11 +105,13 @@ public class SelectRole extends AppCompatActivity implements View.OnClickListene
                             } else if (propertyType.equalsIgnoreCase("Residential")) {
                                 Intent i = new Intent(this, History.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.putExtra("propertyType", "Residential");
                                 startActivity(i);
                             } else if (propertyType.equalsIgnoreCase("Commercial")) {
-                                Intent i = new Intent(this, CommercialAddProperty.class);
-                                //  Intent i = new Intent(this, AddProperty.class);
+                                //Intent i = new Intent(this, CommercialAddProperty.class);
+                                Intent i = new Intent(this, History.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.putExtra("propertyType", "Commercial");
                                 startActivity(i);
                             }
                             break;

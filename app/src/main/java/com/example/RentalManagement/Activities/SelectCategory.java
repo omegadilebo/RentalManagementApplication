@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.RentalManagement.Dialogs.LogOut;
+import com.example.RentalManagement.Owner.PropertyManagement.PropertyManagementType;
 import com.example.RentalManagement.R;
 
 public class SelectCategory extends AppCompatActivity implements View.OnClickListener {
@@ -116,6 +117,11 @@ public class SelectCategory extends AppCompatActivity implements View.OnClickLis
                     switch (category){
                         case "Rental":
                             Intent i = new Intent(this, SelectRole.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+                            break;
+                        case "Property Management":
+                            i = new Intent(this, PropertyManagementType.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
                             break;

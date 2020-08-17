@@ -58,6 +58,7 @@ import com.example.RentalManagement.Dialogs.LogOut;
 import com.example.RentalManagement.Dialogs.Parking;
 import com.example.RentalManagement.Dialogs.TenantType;
 import com.example.RentalManagement.Owner.Residential.Models.AddPropertyResponse;
+import com.example.RentalManagement.Owner.UploadPropertyImages;
 import com.example.RentalManagement.R;
 import com.example.RentalManagement.Services.ApiClient;
 import com.example.RentalManagement.Services.ApiInterface;

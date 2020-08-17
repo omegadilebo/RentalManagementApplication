@@ -26,16 +26,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Owner.Commercial.Activities.CommercialAddProperty"
+        <activity android:name=".Owner.PropertyManagement.PropertyManagementDetails"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".Owner.Residential.Activities.History"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Owner.Residential.Activities.UploadPropertyImages"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Tenant.PropertyImage"
+        <activity android:name=".Owner.PropertyManagement.PropertyManagementType"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Tenant.PropertyDetails"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Owner.UploadPropertyImages"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Owner.Commercial.Activities.CommercialAddProperty"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Owner.Residential.Activities.History"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tenant.PropertyImage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tenant.PropertyDetails"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Tenant.SearchPropertyResults"
             android:screenOrientation="portrait" />

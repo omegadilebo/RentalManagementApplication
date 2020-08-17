@@ -30,6 +30,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.RentalManagement.Activities.SelectRole;
 import com.example.RentalManagement.Dialogs.LogOut;
 import com.example.RentalManagement.Dialogs.RemoveProperty;
+import com.example.RentalManagement.Owner.Commercial.Activities.CommercialAddProperty;
 import com.example.RentalManagement.Owner.Residential.Adapters.HistoryAdapter;
 import com.example.RentalManagement.Owner.Residential.Models.HistoryResponse;
 import com.example.RentalManagement.R;
@@ -59,7 +60,9 @@ public class History extends AppCompatActivity implements RemoveProperty.RemoveP
     /*dummy images*/
     List<Integer> images;
     int position, propertyId;
+    String propertyType;
     SwipeRefreshLayout swipeRefreshLayout;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +77,10 @@ public class History extends AppCompatActivity implements RemoveProperty.RemoveP
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 finish();
             }
         });
+
         images = new ArrayList<>();
         images.add(R.drawable.inside);
         images.add(R.drawable.specialarea);
@@ -89,23 +92,34 @@ public class History extends AppCompatActivity implements RemoveProperty.RemoveP
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        /*adapter = new HistoryAdapter(images, getApplicationContext(), new HistoryAdapter.OnRemovePropertyListener() {
-            @Override
-            public void onRemoveProperty(View v, int adapterPosition, int propertyId) {
-                position = adapterPosition;
-                RemoveProperty removeProperty= new RemoveProperty();
-                removeProperty.show(getFragmentManager(), "RemoveProperty");
-            }
-        });*/
 
-        // recyclerView.setAdapter(adapter);
         networkConnection = new NetworkConnection(this);
         progressDialog = new ProgressDialog(this, R.style.progressDialogStyle);
-        //  getHistory();
+
+        propertyType = getIntent().getStringExtra("propertyType");
+        if (propertyType.equalsIgnoreCase("Residential")) {
+            //  getResidentialHistory();
+        /*    adapter = new HistoryAdapter(images, getApplicationContext(), new HistoryAdapter.OnRemovePropertyListener() {
+                @Override
+                public void onRemoveProperty(View v, int adapterPosition, int propertyId) {
+                    position = adapterPosition;
+                    RemoveProperty removeProperty= new RemoveProperty();
+                    removeProperty.show(getFragmentManager(), "RemoveProperty");
+                }
+            });*/
+            recyclerView.setAdapter(adapter);
+        } else if (propertyType.equalsIgnoreCase("Commercial")) {
+            //getCommercialHistory();
+        }
+
         addProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), AddProperty.class);
+                if (propertyType.equalsIgnoreCase("Residential")) {
+                    i = new Intent(getApplicationContext(), AddProperty.class);
+                } else if (propertyType.equalsIgnoreCase("Commercial")) {
+                    i = new Intent(getApplicationContext(), CommercialAddProperty.class);
+                }
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("buttonName", "addProperty");
                 startActivity(i);
@@ -115,7 +129,7 @@ public class History extends AppCompatActivity implements RemoveProperty.RemoveP
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        getHistory();
+                        //getResidentialHistory();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }
@@ -125,7 +139,7 @@ public class History extends AppCompatActivity implements RemoveProperty.RemoveP
     /*
         to get history of the owner properties
     */
-    private void getHistory() {
+/*    private void getResidentialHistory() {
         if (networkConnection.isConnectingToInternet()) {
             try {
                 progressDialog.setMessage("Fetching Previous Adds.....");
@@ -186,6 +200,68 @@ public class History extends AppCompatActivity implements RemoveProperty.RemoveP
             Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void getCommercialHistory() {
+        if (networkConnection.isConnectingToInternet()) {
+            try {
+                progressDialog.setMessage("Fetching Previous Adds.....");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+                Call<HistoryResponse> call = apiInterface.getHistory(Integer.parseInt(Config.getUserId(getApplicationContext())));
+                call.enqueue(new Callback<HistoryResponse>() {
+                    @Override
+                    public void onResponse(Call<HistoryResponse> call, Response<HistoryResponse> response) {
+                        historyResponse = response.body();
+                        Log.d("TAG", "getHistory1: " + data);
+                        try {
+                            if (historyResponse.getStatus().equalsIgnoreCase("1")) {
+                                progressDialog.dismiss();
+                                if (historyResponse.getStatus().equalsIgnoreCase("true")) {
+                                    Log.d("TAG", "onResponse: status1" + historyResponse.getData().length);
+                                    for (int i = 0; i < historyResponse.getData().length; i++) {
+                                        data.add(historyResponse.getData()[i]);
+                                    }
+                                }
+                                adapter = new HistoryAdapter(data, getApplicationContext(), new HistoryAdapter.OnRemovePropertyListener() {
+                                    @Override
+                                    public void onRemoveProperty(View v, int adapterPosition, int id) {
+                                        position = adapterPosition;
+                                        propertyId = id;
+                                        RemoveProperty removeProperty = new RemoveProperty();
+                                        removeProperty.show(getFragmentManager(), "RemoveProperty");
+                                    }
+                                });
+                                //adapter = new HistoryAdapter(data, RideHistory.this,getApplicationContext());
+                                recyclerView.setAdapter(adapter);
+                            } else {
+                                progressDialog.dismiss();
+
+                            }
+                        } catch (Exception e) {
+                            Log.d("TAG", "getHistory3: " + e);
+                            if (progressDialog != null) {
+                                progressDialog.cancel();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<HistoryResponse> call, Throwable t) {
+                        Log.d("TAG", "getHistory4: " + t);
+                        progressDialog.cancel();
+                    }
+                });
+            } catch (Exception e) {
+                Log.d("TAG", "getHistory5: " + e);
+                if (progressDialog != null) {
+                    progressDialog.cancel();
+                }
+            }
+        } else {
+            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
+    }*/
 
     /*changing statusbar color*/
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

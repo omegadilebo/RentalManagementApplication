@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Rental Management</string>
-    <string name="welcomeNote">Welcome to Rental Management Application</string>
+    <string name="app_name">Eazymove</string>
+    <string name="welcomeNote">Welcome to Eazymove Application</string>
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="register">Register</string>
@@ -44,9 +44,9 @@
     <string name="enterFloors">Enter No. of Floors.</string>
     <string name="floor">Floor No. :</string>
     <string name="enterFloor">Enter Floor No.</string>
-    <string name="size">Size:</string>
+    <string name="size">Size (Sq.ft) :</string>
     <string name="enterSize">Enter in Sq.ft.</string>
-    <string name="rent">Rent per month:</string>
+    <string name="rent">Rent per month :</string>
     <string name="enterRent">Enter Rent</string>
     <string name="preferTenant">Prefered Tenants:</string>
     <string name="selectTenant">Select Tenant Type</string>
@@ -68,7 +68,7 @@
     <string name="lift">Lift Avaliable:</string>
     <string name="avaliable">Avaliable</string>
     <string name="notAvaliable">Not Avaliable</string>
-    <string name="timeToContact">Prefered time to Contact:</string>
+    <string name="timeToContact">Prefered time to Contact :</string>
     <string name="time">8AM-6PM</string>
     <string name="anyTime">AnyTime</string>
     <string name="address">Address:</string>
@@ -145,9 +145,32 @@
         <item>Industrial Building</item>
     </string-array>
     <string-array name="commercialPropertyFeatures">
+        <item>Security surveillance</item>
+        <item>24hrs Water</item>
+        <item>Lift Facility</item>
         <item>Furnished</item>
         <item>Semi Furnished</item>
         <item>Main Road</item>
         <item>Corner Property</item>
+        <item>Near to Railway Station</item>
+    </string-array>
+    <!--property located-->
+    <string-array name="propertyLocated">
+        <item>Urban Area</item>
+        <item>Rural Area</item>
+    </string-array>
+    <string-array name="PropertyManagementPropertyType">
+        <item>Apartment</item>
+        <item>Shopping Complex</item>
+        <item>Godown</item>
+        <item>Open Place</item>
+        <item>Shops</item>
+    </string-array>
+    <string-array name="cityname">
+        <item>Hyderabad</item>
+        <item>Warangal</item>
+        <item>Medak</item>
+        <item>Vikarabad</item>
+        <item>Sangareddy</item>
     </string-array>
 </resources>
