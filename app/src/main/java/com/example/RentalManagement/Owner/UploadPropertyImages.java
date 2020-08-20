@@ -7,6 +7,7 @@
 package com.example.RentalManagement.Owner;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -14,9 +15,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -26,7 +30,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +44,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import com.example.RentalManagement.Activities.PasswordChange;
 import com.example.RentalManagement.Dialogs.LogOut;
 import com.example.RentalManagement.Owner.Residential.Activities.History;
 import com.example.RentalManagement.Owner.Residential.Models.AddPropertyResponse;
@@ -68,13 +75,15 @@ import retrofit2.Response;
 public class UploadPropertyImages extends AppCompatActivity implements View.OnClickListener {
     /*declarations*/
     Toolbar toolbar;
-    TextView capture1, capture2, capture3;
+    TextView capture1, capture2, capture3, resendOtp, timer;
     Bitmap bitmap1, bitmap2, bitmap3;
     ImageView image1, clear1, image2, clear2, image3, clear3;
     RelativeLayout imagerelativeLayout1, imagerelativeLayout2, imagerelativeLayout3;
     static final int REQUEST_IMAGE_CAPTURE1 = 101, REQUEST_IMAGE_CAPTURE2 = 102, REQUEST_IMAGE_CAPTURE3 = 103;
     static final int GALLERY1 = 1, GALLERY2 = 2, GALLERY3 = 3;
-    Button upload;
+    Button sendOtp, submitOtp;
+    LinearLayout otpLayout;
+    EditText otp;
     ApiInterface apiInterface;
     AddPropertyResponse addPropertyResponse;
     private static final int PERMISSION_REQUEST_CODE = 104;
@@ -83,7 +92,7 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
             Manifest.permission.CAMERA
     };
     Uri imageUri1, imageUri2, imageUri3;
-    String filePath, buttonName;
+    String filePath, buttonName, OTPNumber;
 
     double latitude, longitude;
     String propertyType, apartmentType, apartmentName, bhk, extent, rent, roomNo, floorNo,
@@ -95,6 +104,8 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
     ProgressDialog progressDialog;
     NetworkConnection networkConnection;
     Bundle bundle;
+    CountDownTimer countDownTimer;
+
     //Bitmap bitmap1, bitmap2, bitmap3;
 
     @Override
@@ -165,7 +176,12 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         image3 = findViewById(R.id.image3);
         clear3 = findViewById(R.id.clear3);
         capture3 = findViewById(R.id.capture3);
-        upload = findViewById(R.id.upload);
+        sendOtp = findViewById(R.id.sendOtp);
+        otpLayout = findViewById(R.id.otpLayout);
+        otp = findViewById(R.id.otp);
+        timer = findViewById(R.id.timer);
+        resendOtp = findViewById(R.id.resendOtp);
+        submitOtp = findViewById(R.id.submitOtp);
 
         networkConnection = new NetworkConnection(this);
         progressDialog = new ProgressDialog(this, R.style.progressDialogStyle);
@@ -175,7 +191,9 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
         capture2.setOnClickListener(this);
         clear3.setOnClickListener(this);
         capture3.setOnClickListener(this);
-        upload.setOnClickListener(this);
+        sendOtp.setOnClickListener(this);
+        resendOtp.setOnClickListener(this);
+        submitOtp.setOnClickListener(this);
 
         if (BitmapHelper.getInstance().getBitmap1() != null) {
             bitmap1 = BitmapHelper.getInstance().getBitmap1();
@@ -246,10 +264,28 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                 capture3.setVisibility(View.VISIBLE);
                 bitmap3 = null;
                 break;
-            case R.id.upload:
-                Log.d("TAG", "onClicksd: " + locality.substring(0, 3).toUpperCase() + "\n" +
-                        generatePropertyId(locality.substring(0, 3).toUpperCase()));
-                try {
+            case R.id.sendOtp:
+                sendOtpToMobile();
+                sendOtp.setVisibility(View.GONE);
+                otpLayout.setVisibility(View.VISIBLE);
+                timer.setVisibility(View.VISIBLE);
+
+                new CountDownTimer(30000,1000) {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        int seconds = (int)(millisUntilFinished / 1000);
+                        if(seconds < 10)
+                            timer.setText("00:0"+ seconds);
+                        else
+                            timer.setText("00:"+ seconds);
+                    }
+                    @Override
+                    public void onFinish() {
+                        resendOtp.setVisibility(View.VISIBLE);
+                    }
+                }.start();
+              /*  try {
                     if (bitmap1 == null) {
                         Toast.makeText(this, "please Select " + capture1.getText().toString(), Toast.LENGTH_LONG).show();
                     } else if (bitmap2 == null) {
@@ -257,6 +293,7 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                     } else if (bitmap3 == null) {
                         Toast.makeText(this, "please Select " + capture3.getText().toString(), Toast.LENGTH_LONG).show();
                     } else {
+
                         uploadPropertyDetailsStatus(
                                 Config.getUserId(getApplicationContext()), latitude, longitude, locality, subLocality,
                                 apartmentType, apartmentName, bhk, extent, rent, roomNo, floorNo, tenantType, foodType,
@@ -267,9 +304,78 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
                             bitmap2 + "\n" +
                             bitmap3);
                 } catch (Exception e) {
-                    Log.d("TAG", "uploadonClicke: " + e);
-                }
+                    Log.d("TAG", "uploadonClicke: " + e); }*/
                 break;
+            case R.id.resendOtp:
+                if(countDownTimer != null){
+                    countDownTimer.cancel();
+                }
+                resendOtp.setVisibility(View.GONE);
+                countDownTimer = new CountDownTimer(30000,1000) {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        int seconds = (int)(millisUntilFinished / 1000);
+                        if(seconds < 10)
+                        timer.setText("00:0"+ seconds);
+                        else
+                            timer.setText("00:"+ seconds);
+                    }
+                    @Override
+                    public void onFinish() {
+                    }
+                }.start();
+                sendOtpToMobile();
+                break;
+            case R.id.submitOtp:
+                validateOtp();
+                break;
+        }
+    }
+
+    private void sendOtpToMobile() {
+        if (networkConnection.isConnectingToInternet()) {
+            try {
+                progressDialog.setMessage("Sending OTP...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                if (progressDialog != null) {
+                    progressDialog.cancel();
+                }
+                apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+
+            } catch (Exception e) {
+                if (progressDialog != null) {
+                    progressDialog.cancel();
+                }
+            }
+        } else {
+            Toast.makeText(this, R.string.no_net, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void validateOtp() {
+        String getOtp = otp.getText().toString();
+        if (getOtp.length() == 0) {
+            otp.setError("Enter OTP");
+        } else if (getOtp.length() < 6) {
+            otp.setError("Enter 6 digit OTP");
+        } else {
+            if (getOtp.length() == 6) {
+                if (networkConnection.isConnectingToInternet()) {
+                    if (getOtp.equals(OTPNumber)) {
+                  /*      uploadPropertyDetailsStatus(
+                                Config.getUserId(getApplicationContext()), latitude, longitude, locality, subLocality,
+                                apartmentType, apartmentName, bhk, extent, rent, roomNo, floorNo, tenantType, foodType,
+                                Arrays.toString(specialFeatures), water, parking, lift, contactTime, address);*/
+                    } else {
+                        Toast.makeText(this, "Please Enter Correct Otp", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 
@@ -282,7 +388,7 @@ public class UploadPropertyImages extends AppCompatActivity implements View.OnCl
             try {
                 progressDialog.setTitle("Uploading Details");
                 progressDialog.setMessage("Please wait We are Uploading Details...");
-                progressDialog.setCancelable(true);
+                progressDialog.setCancelable(false);
                 progressDialog.show();
                 String inside = convertToString1();
                 String imageName1 = capture1.getText().toString();

@@ -26,10 +26,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Owner.PropertyManagement.PropertyManagementDetails"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Owner.PropertyManagement.PropertyManagementType"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".Owner.PropertyManagement.ShopsDetails"></activity>
+        <activity android:name=".Owner.PropertyManagement.OpenPlaceDetails" />
+        <activity android:name=".Owner.PropertyManagement.GodownDetails" />
+        <activity
+            android:name=".Owner.PropertyManagement.PropertyManagementDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Owner.PropertyManagement.PropertyManagementType"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Owner.UploadPropertyImages"
             android:screenOrientation="portrait" />

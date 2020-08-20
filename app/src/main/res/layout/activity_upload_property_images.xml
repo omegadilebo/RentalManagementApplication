@@ -180,22 +180,33 @@
                 android:src="@drawable/clear_red" />
         </RelativeLayout>
     </RelativeLayout>
-    <RelativeLayout
+<!--    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayout3"
         android:layout_marginLeft="30dp"
         android:gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp">
-
+        android:layout_marginRight="30dp">-->
         <Button
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:id="@+id/upload"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/sendOtp"
+            android:layout_below="@id/relativeLayout3"
             android:background="@drawable/eclipse_shape"
-            android:text="@string/upload"
+            android:text="@string/sendOtp"
+            android:visibility="visible"
             android:textColor="@color/white" />
-    </RelativeLayout>
+    <include layout="@layout/layout_otp"
+        android:id="@+id/otpLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_below="@id/relativeLayout3"
+        />
+        />
 </RelativeLayout>

@@ -42,6 +42,7 @@ public class PropertyManagementType extends AppCompatActivity implements
     TextView remove, addmore, propertyLocated, cityName, propertyType, save;
     int i = 0;
     String property, registerType, dir1, dir2, dir3, dir4, located, cName, pType;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,31 +174,27 @@ public class PropertyManagementType extends AppCompatActivity implements
         } else {
             property = propertyRadioButton.getText().toString();
             registerType = registerRadioButton.getText().toString();
-            Intent i = new Intent(getApplicationContext(), PropertyManagementDetails.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Bundle bundle = new Bundle();
-            bundle.putString("property",property);
-            bundle.putString("registerType",registerType);
-            bundle.putString("located",located);
-            bundle.putString("cName",cName);
-            bundle.putString("pType",pType);
-            if (property.equalsIgnoreCase("Firm")) {
-                dir1 = director1.getText().toString();
-                dir2 = director2.getText().toString();
-                dir3 = director1.getText().toString();
-                dir4 = director4.getText().toString();
-                if (dir1.length() == 0 | dir2.length() == 0) {
-                    Toast.makeText(this, "Select Property Type", Toast.LENGTH_LONG).show();
-                }else{
-                    bundle.putString("dir1",dir1);
-                    bundle.putString("dir2",dir2);
-                    bundle.putString("dir3",dir3);
-                    bundle.putString("dir4",dir4);
-                    i.putExtra("bundle",bundle);
-                    startActivity(i);
-                }
-            } else if (propertyRadioButton.getText().toString().equalsIgnoreCase("Individual")) {
-                startActivity(i);
+            switch (pType) {
+                case "Apartment":
+                    intent = new Intent(getApplicationContext(), PropertyManagementDetails.class);
+                    getDetails();
+                    break;
+                case "Shopping Complex":
+                    intent = new Intent(getApplicationContext(), PropertyManagementDetails.class);
+                    getDetails();
+                    break;
+                case "Godown":
+                    intent = new Intent(getApplicationContext(), GodownDetails.class);
+                    getDetails();
+                    break;
+                case "Open Place":
+                    intent = new Intent(getApplicationContext(), OpenPlaceDetails.class);
+                    getDetails();
+                    break;
+                case "Shops":
+                    intent = new Intent(getApplicationContext(), ShopsDetails.class);
+                    getDetails();
+                    break;
             }
         }
     }
@@ -210,5 +207,33 @@ public class PropertyManagementType extends AppCompatActivity implements
     @Override
     public void getPropertyLocated(String PropertyLocated) {
         propertyLocated.setText(PropertyLocated);
+    }
+    private void getDetails(){
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putString("property", property);
+        bundle.putString("registerType", registerType);
+        bundle.putString("located", located);
+        bundle.putString("cName", cName);
+        bundle.putString("pType", pType);
+        if (property.equalsIgnoreCase("Firm")) {
+            dir1 = director1.getText().toString();
+            dir2 = director2.getText().toString();
+            dir3 = director1.getText().toString();
+            dir4 = director4.getText().toString();
+            if (dir1.length() == 0 | dir2.length() == 0) {
+                Toast.makeText(this, "Enter Directors Name", Toast.LENGTH_LONG).show();
+            } else {
+                bundle.putString("dir1", dir1);
+                bundle.putString("dir2", dir2);
+                bundle.putString("dir3", dir3);
+                bundle.putString("dir4", dir4);
+                intent.putExtra("bundle", bundle);
+                startActivity(intent);
+            }
+        } else if (propertyRadioButton.getText().toString().equalsIgnoreCase("Individual")) {
+            intent.putExtra("bundle", bundle);
+            startActivity(intent);
+        }
     }
 }

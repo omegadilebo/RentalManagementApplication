@@ -188,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             password.setError("minimum 8 charcters");
         } else {
             getGender = radioButton.getText().toString();
-            if (getMobileNumber.length() == 10 && getMobileNumber.matches("^[6-9]\\d{9}$")) {
+            if (getMobileNumber.length() == 10 & getMobileNumber.matches("^[6-9]\\d{9}$")) {
                 if (networkConnection.isConnectingToInternet()) {
                         if (ActivityCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.READ_PHONE_STATE)
                                 != PackageManager.PERMISSION_GRANTED) {

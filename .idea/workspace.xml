@@ -6,18 +6,19 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf1279c1-2d8a-458e-9165-6ad759fe3c87" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/CityName.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/PropertyLocated.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Dialogs/PropertyManagementPropertyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/PropertyManagementDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/PropertyManagementType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_add_property_management_details.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_property_type.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/GodownDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/OpenPlaceDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/ShopsDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_godown_details.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_open_place_details.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_shops_details.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_otp.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/property_details_layout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -32,16 +33,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/SelectRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Commercial/Activities/CommercialAddProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Commercial/Activities/CommercialAddProperty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Residential/Activities/AddProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Residential/Activities/AddProperty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Residential/Activities/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Residential/Activities/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/Residential/Activities/UploadPropertyImages.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/UploadPropertyImages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_commercial_add_property.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_commercial_add_property.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/ForgotPasswordActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/ForgotPasswordActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Activities/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/PropertyManagementDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/PropertyManagementDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/PropertyManagementType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/PropertyManagement/PropertyManagementType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/UploadPropertyImages.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/RentalManagement/Owner/UploadPropertyImages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_add_property_management_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_add_property_management_details.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_upload_property_images.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_upload_property_images.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +65,7 @@
         <option value="resourceFile" />
         <option value="layoutResourceFile_vertical" />
         <option value="Class" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -95,6 +94,9 @@
     <key name="android.template.-1263687491">
       <recent name="com.example.RentalManagement.Owner.Commercial.Activities" />
       <recent name="com.example.RentalManagement.Owner.Commercial" />
+    </key>
+    <key name="android.template.-614528778">
+      <recent name="com.example.RentalManagement.Owner.PropertyManagement" />
     </key>
     <key name="android.template.1763092282">
       <recent name="com.example.RentalManagement.Owner.PropertyManagement" />
@@ -197,10 +199,10 @@
       <screen x="50" y="27" width="1316" height="741" />
     </state>
     <state x="441" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/50.27.1316.741@50.27.1316.741" timestamp="1597576630765" />
-    <state x="291" y="155" width="824" height="491" key="AndroidCreateResourceFileDialog" timestamp="1597245610066">
+    <state x="291" y="155" width="824" height="491" key="AndroidCreateResourceFileDialog" timestamp="1597937055843">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state x="291" y="155" width="824" height="491" key="AndroidCreateResourceFileDialog/50.27.1316.741@50.27.1316.741" timestamp="1597245610066" />
+    <state x="291" y="155" width="824" height="491" key="AndroidCreateResourceFileDialog/50.27.1316.741@50.27.1316.741" timestamp="1597937055843" />
     <state x="557" y="212" width="292" height="405" key="AndroidCreateXmlResourceDialog" timestamp="1597248323228">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
@@ -209,30 +211,30 @@
       <screen x="50" y="27" width="1316" height="741" />
     </state>
     <state x="486" y="158" width="424" height="491" key="FileChooserDialogImpl/50.27.1316.741@50.27.1316.741" timestamp="1597474751768" />
-    <state width="1270" height="211" key="GridCell.Tab.0.bottom" timestamp="1597688767221">
+    <state width="1270" height="211" key="GridCell.Tab.0.bottom" timestamp="1597938837824">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state width="1270" height="211" key="GridCell.Tab.0.bottom/50.27.1316.741@50.27.1316.741" timestamp="1597688767221" />
-    <state width="1270" height="211" key="GridCell.Tab.0.center" timestamp="1597688767220">
+    <state width="1270" height="211" key="GridCell.Tab.0.bottom/50.27.1316.741@50.27.1316.741" timestamp="1597938837824" />
+    <state width="1270" height="211" key="GridCell.Tab.0.center" timestamp="1597938837822">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state width="1270" height="211" key="GridCell.Tab.0.center/50.27.1316.741@50.27.1316.741" timestamp="1597688767220" />
-    <state width="1270" height="211" key="GridCell.Tab.0.left" timestamp="1597688767219">
+    <state width="1270" height="211" key="GridCell.Tab.0.center/50.27.1316.741@50.27.1316.741" timestamp="1597938837822" />
+    <state width="1270" height="211" key="GridCell.Tab.0.left" timestamp="1597938837821">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state width="1270" height="211" key="GridCell.Tab.0.left/50.27.1316.741@50.27.1316.741" timestamp="1597688767219" />
-    <state width="1270" height="211" key="GridCell.Tab.0.right" timestamp="1597688767220">
+    <state width="1270" height="211" key="GridCell.Tab.0.left/50.27.1316.741@50.27.1316.741" timestamp="1597938837821" />
+    <state width="1270" height="211" key="GridCell.Tab.0.right" timestamp="1597938837823">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state width="1270" height="211" key="GridCell.Tab.0.right/50.27.1316.741@50.27.1316.741" timestamp="1597688767220" />
+    <state width="1270" height="211" key="GridCell.Tab.0.right/50.27.1316.741@50.27.1316.741" timestamp="1597938837823" />
     <state x="480" y="177" width="446" height="447" key="chooseDestDirectoryDialog" timestamp="1596950510399">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
     <state x="480" y="177" width="446" height="447" key="chooseDestDirectoryDialog/50.27.1316.741@50.27.1316.741" timestamp="1596950510399" />
-    <state x="364" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1597674543308">
+    <state x="364" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1597932956417">
       <screen x="50" y="27" width="1316" height="741" />
     </state>
-    <state x="364" y="225" key="com.intellij.ide.util.TipDialog/50.27.1316.741@50.27.1316.741" timestamp="1597674543308" />
+    <state x="364" y="225" key="com.intellij.ide.util.TipDialog/50.27.1316.741@50.27.1316.741" timestamp="1597932956417" />
     <state x="453" y="27" width="500" height="741" key="refactoring.ChangeSignatureDialog" timestamp="1597346241268">
       <screen x="50" y="27" width="1316" height="741" />
     </state>

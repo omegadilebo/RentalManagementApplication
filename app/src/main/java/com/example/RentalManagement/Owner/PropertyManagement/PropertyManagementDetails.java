@@ -36,7 +36,7 @@ public class PropertyManagementDetails extends AppCompatActivity implements
             Hno, colony, landmark, city, state, pincode;
     String noFloors, noFlats, noBlocks, extent, Rent, leaseAmount, leaseDuration,
             flatNo, Colony, Landmark, City, State, Pincode, splFeatures, contactTime;
-    TextView features, save;
+    TextView features, save, flatsTextview;
     RadioGroup contactRadioGroup;
     RadioButton contactRadioButton, beforeRadioButton, afterRadioButton, anyTimeRadioButton;
     String[] seperated;
@@ -59,7 +59,12 @@ public class PropertyManagementDetails extends AppCompatActivity implements
             }
         });
         floors = findViewById(R.id.floors);
+        flatsTextview = findViewById(R.id.flatsTextview);
         flats = findViewById(R.id.flats);
+        if(b.getString("pType").equalsIgnoreCase("Shopping Complex")){
+            flatsTextview.setText("No.of shops");
+            flats.setHint("Enter No. of Shops");
+        }
         blocks = findViewById(R.id.blocks);
         size = findViewById(R.id.size);
         features = findViewById(R.id.features);

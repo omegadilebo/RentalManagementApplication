@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--size of the property-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/size"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/size"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangular_shape"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center_vertical"
+        android:hint="@string/enterSize"
+        android:inputType="number"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textCursorDrawable="@null"
+        android:textSize="15sp" />
+
+    <!--rent per month-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/rent"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/rent"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangular_shape"
+        android:gravity="center_vertical"
+        android:hint="@string/enterRent"
+        android:inputType="number"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textCursorDrawable="@null"
+        android:textSize="15sp" />
+
+    <!--Deposit-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Deposit :"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/deposit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangular_shape"
+        android:gravity="center_vertical"
+        android:hint="Enter Deposit Amount"
+        android:inputType="number"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textCursorDrawable="@null"
+        android:textSize="15sp" />
+
+    <!--lease prefered for-->
+    <EditText
+        android:id="@+id/preferedFor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center_vertical"
+        android:hint="Lease Prefered For"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rectangular_shape"
+        android:textCursorDrawable="@null"
+        android:textSize="15sp" />
+    <!--lease duration-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Lease Duration (Years) :"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/duration"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangular_shape"
+        android:gravity="center_vertical"
+        android:hint="Enter Lease Duration"
+        android:inputType="number"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textCursorDrawable="@null"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Covered With Any Compound?"
+        android:textSize="15sp" />
+
+    <RadioGroup
+        android:id="@+id/compoundGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/YesRadioButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:text="Yes" />
+
+        <RadioButton
+            android:id="@+id/noRadioButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:text="No" />
+    </RadioGroup>
+
+    <!--Features-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Features :"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/features"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangular_shape"
+        android:gravity="center_vertical"
+        android:hint="@string/featuresHint" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Address :"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangular_shape"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/HNo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_vertical"
+            android:hint="Enter House/Flat No."
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/colony"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_vertical"
+            android:hint="Colony"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/landmark"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_vertical"
+            android:hint="Landmark"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_vertical"
+            android:hint="City"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/state"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_vertical"
+            android:hint="State"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/pincode"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_vertical"
+            android:hint="Pincode"
+            android:inputType="number"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <!--time to contact-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/timeToContact"
+        android:textSize="15sp" />
+
+    <RadioGroup
+        android:id="@+id/timeGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/beforeRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:text="Before 10 AM" />
+
+        <RadioButton
+            android:id="@+id/afterRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:text="After 6 PM" />
+
+        <RadioButton
+            android:id="@+id/anyTimeRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:text="@string/anyTime" />
+    </RadioGroup>
+
+</LinearLayout>

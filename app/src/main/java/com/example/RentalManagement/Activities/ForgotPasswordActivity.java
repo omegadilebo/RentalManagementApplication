@@ -113,17 +113,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                     mobileNumber.setError("Enter your number");
                 } else if (MobileNo.length() < 10) {
                     mobileNumber.setError("Enter 10 digit Mobile Number");
-                } else if (!MobileNo.matches("[0-9.?]*")) {
-                    mobileNumber.setError("Only numbers are allowed");
-                } else if (MobileNo.startsWith("0") ||
-                        MobileNo.startsWith("1") ||
-                        MobileNo.startsWith("2") ||
-                        MobileNo.startsWith("3") ||
-                        MobileNo.startsWith("4") ||
-                        MobileNo.startsWith("5")) {
-                    mobileNumber.setError("Enter a valid number");
-                } else {
-                    if (MobileNo.length() == 10) {
+                }  else {
+                    if (MobileNo.length() == 10 & MobileNo.matches("^[6-9]\\d{9}$")) {
                         if (networkConnection.isConnectingToInternet()) {
                             if (ActivityCompat.checkSelfPermission(ForgotPasswordActivity.this, Manifest.permission.READ_PHONE_STATE)
                                     != PackageManager.PERMISSION_GRANTED) {

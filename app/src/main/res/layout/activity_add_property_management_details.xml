@@ -57,6 +57,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="No.Of Flats :"
+                android:id="@+id/flatsTextview"
                 android:textSize="15sp" />
 
             <EditText
